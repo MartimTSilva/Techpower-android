@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.navigation.NavigationView;
@@ -36,6 +37,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager = getSupportFragmentManager();
 
         // TODO: Show user data on header
+
+        Fragment fragment = new ProductListFragment();
+        setTitle("Techpower");
+        fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
     }
 
     // TODO: Finish button press
