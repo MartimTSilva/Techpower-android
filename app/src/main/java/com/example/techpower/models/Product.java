@@ -2,13 +2,13 @@ package com.example.techpower.models;
 
 public class Product {
     private int id;
-    private int name;
-    private int price;
+    private String name;
+    private Float price;
     private String description;
     private String image;
     private int idCategory;
 
-    public Product(int id, int name, int price, String description, String image, int idCategory) {
+    public Product(int id, String name, Float price, String description, String image, int idCategory) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -25,19 +25,19 @@ public class Product {
         this.id = id;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public int getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
