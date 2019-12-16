@@ -1,10 +1,17 @@
 package com.example.techpower.helpers;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import com.example.techpower.models.Category;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class StoreDBHelper extends SQLiteOpenHelper {
 
@@ -61,5 +68,49 @@ public class StoreDBHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
-    // TODO: Create crud
+    /* CRUD Category */
+
+    public ArrayList<Category> getAllCategoriesDB() {
+        ArrayList<Category> categories = new ArrayList<>();
+        Cursor cursor = this.database.query(CATEGORY_TABLE_NAME,
+                new String[]{CATEGORY_ID, CATEGORY_NAME, CATEGORY_PARENT},
+                null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Category auxCategory = new Category(cursor.getInt(0), cursor.getString(1), cursor.getInt(2));
+                auxCategory.setId(cursor.getInt(0));
+                categories.add(auxCategory);
+            } while (cursor.moveToFirst());
+        }
+
+        cursor.close();
+        return categories;
+    }
+
+    public void insertCategoryDB(Category category) {
+        ContentValues values = new ContentValues();
+        values.put(CATEGORY_ID, category.getId());
+        values.put(CATEGORY_NAME, category.getName());
+        values.put(CATEGORY_PARENT, category.getParent_id());
+
+        this.database.insert(CATEGORY_TABLE_NAME, null, values);
+    }
+
+    public boolean updateCategoryDB(Category category) {
+        ContentValues values = new ContentValues();
+        values.put(CATEGORY_ID, category.getId());
+        values.put(CATEGORY_NAME, category.getName());
+        values.put(CATEGORY_PARENT, category.getParent_id());
+
+        return this.database.update(CATEGORY_TABLE_NAME, values, "id = ?", new String[]{category.getId() + ""}) > 0;
+    }
+
+    public boolean deleteCategoryDB(int id) {
+        return this.database.delete(CATEGORY_TABLE_NAME, "id= ?", new String[]{id + ""}) > 0;
+    }
+
+    public void deleteAllCategoriesDB() {
+        this.database.delete(CATEGORY_TABLE_NAME, null, null);
+    }
 }
