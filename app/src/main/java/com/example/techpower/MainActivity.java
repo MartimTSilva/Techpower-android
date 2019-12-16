@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -46,6 +48,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // TODO: Finish button press
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
+
+        Fragment fragment = null;
+
+        switch (menuItem.getItemId()) {
+            case R.id.nav_login:
+                //fragment = new LoginActivity();
+                Intent intent = new Intent(this, LoginActivity.class);
+                setTitle(menuItem.getTitle());
+                startActivity(intent);
+        }
+
+        if(fragment != null) {
+            fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
+        }
+        drawer.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 }
