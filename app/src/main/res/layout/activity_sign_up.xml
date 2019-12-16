@@ -166,14 +166,14 @@
                 android:id="@+id/textView_postalCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/et_postalCOde" />
+                android:text="@string/et_postalCode" />
 
             <EditText
                 android:id="@+id/editText_postalCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/et_postalCOde"
+                android:hint="@string/et_postalCode"
                 android:inputType="text" />
 
             <TextView
