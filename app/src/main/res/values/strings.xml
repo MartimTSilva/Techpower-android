@@ -11,7 +11,7 @@
     <string name="settings_tv_api">API Url:</string>
     <string name="settings_btn_connect">Connect</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nav_logout">Logout</string>
 
     <string name="btn_login">Login</string>
     <string name="et_username">Insira o nome de utilizador</string>

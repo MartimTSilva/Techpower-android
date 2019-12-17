@@ -51,18 +51,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (menuItem.getItemId()) {
             case R.id.nav_login:
-                Intent intent = new Intent(this, LoginActivity.class);
+                Intent login_intent = new Intent(this, LoginActivity.class);
                 setTitle(menuItem.getTitle());
-                startActivity(intent);
+                startActivity(login_intent);
                 break;
             case R.id.nav_settings:
-                Intent intent = new Intent(this, Settings.class);
+                Intent settings_intent = new Intent(this, Settings.class);
+                setTitle(menuItem.getTitle());
+                startActivity(settings_intent);
                 break;
         }
 
-        if(fragment != null) {
-            fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
-        }
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
