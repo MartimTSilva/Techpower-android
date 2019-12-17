@@ -55,6 +55,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 setTitle(menuItem.getTitle());
                 startActivity(login_intent);
                 break;
+
+            case R.id.nav_signup:
+                Intent signup_intent = new Intent(this, SignUpActivity.class);
+                setTitle(menuItem.getTitle());
+                startActivity(signup_intent);
+                break;
+
             case R.id.nav_settings:
                 Intent settings_intent = new Intent(this, Settings.class);
                 setTitle(menuItem.getTitle());
@@ -63,6 +70,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         drawer.closeDrawer(GravityCompat.START);
+
+            
+        }
 
         return true;
     }

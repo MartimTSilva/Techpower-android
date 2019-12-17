@@ -6,15 +6,45 @@
     <string name="navigation_drawer_close">close</string>
     <string name="nav_item_search">Search</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Settings -->
     <string name="settings_et_api">Insert url here</string>
     <string name="settings_tv_api">API Url:</string>
     <string name="settings_btn_connect">Connect</string>
 
+    <!-- Logout -->
     <string name="nav_logout">Logout</string>
 
+    <!-- Login -->
     <string name="btn_login">Login</string>
     <string name="et_username">Insira o nome de utilizador</string>
     <string name="et_password">Insira a password</string>
+    
+    <!-- Sign Up -->
+    <string name="nav_signup">Sign up</string>
+    <string name="btn_signup">Sign up</string>
+    <string name="et_username">Username</string>
+    <string name="et_email">E-mail</string>
+    <string name="et_password">Password</string>
+    <string name="et_confirmPassword">Confirm Password</string>
+    <string name="et_firstName">First name</string>
+    <string name="et_lastName">Last name</string>
+    <string name="et_phone">Phone number</string>
+    <string name="et_address">Address</string>
+    <string name="et_postalCode">Postal code</string>
+    <string name="et_city">City</string>
+    <string name="et_country">Country</string>
+    <string name="et_nif">NIF</string>
+    <string name="tv_signup">Sign Up</string>
+
+    <!-- Form Error Messages -->
+    <string name="error_field_required">This field is required</string>
+    <string name="error_invalid_tooShort">too short</string>
+    <string name="error_invalid_tooLong">too long</string>
+    <string name="error_invalid_username">This username is invalid</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">Password too short or does not match</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_invalid_phone">Phone number must have 9 digits</string>
+    <string name="error_invalid_nif">NIF  must have 9 digits</string>
 
 </resources>
