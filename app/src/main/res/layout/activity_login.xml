@@ -18,7 +18,7 @@
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/editText_password"
+        android:id="@+id/editText_ApiUrl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/et_password"

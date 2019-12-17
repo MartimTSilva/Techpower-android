@@ -67,7 +67,7 @@
                 android:text="@string/et_password" />
 
             <EditText
-                android:id="@+id/editText_password"
+                android:id="@+id/editText_ApiUrl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -209,7 +209,7 @@
                 android:layout_height="30dp" />
 
             <Button
-                android:id="@+id/button_login"
+                android:id="@+id/button_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_signup" />

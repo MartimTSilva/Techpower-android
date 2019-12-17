@@ -16,8 +16,6 @@
 
     <!-- Login -->
     <string name="btn_login">Login</string>
-    <string name="et_username">Insira o nome de utilizador</string>
-    <string name="et_password">Insira a password</string>
     
     <!-- Sign Up -->
     <string name="nav_signup">Sign up</string>

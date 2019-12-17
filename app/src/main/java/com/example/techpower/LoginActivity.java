@@ -3,7 +3,6 @@ package com.example.techpower;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginButton = findViewById(R.id.button_login);
         mUsernameEditText = findViewById(R.id.editText_username);
-        mPasswordEditText = findViewById(R.id.editText_password);
+        mPasswordEditText = findViewById(R.id.editText_ApiUrl);
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
