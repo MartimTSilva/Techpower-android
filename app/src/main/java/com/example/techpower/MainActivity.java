@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -49,12 +50,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
-            case R.id.nav_settings:
-                Intent intent = new Intent(this, Settings.class);
+            case R.id.nav_login:
+                Intent intent = new Intent(this, LoginActivity.class);
                 setTitle(menuItem.getTitle());
                 startActivity(intent);
+                break;
+            case R.id.nav_settings:
+                Intent intent = new Intent(this, Settings.class);
+                break;
         }
 
-        return false;
+        if(fragment != null) {
+            fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
+        }
+        drawer.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 }
