@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
@@ -46,6 +47,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // TODO: Finish button press
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        switch (menuItem.getItemId()) {
+            case R.id.nav_settings:
+                Intent intent = new Intent(this, Settings.class);
+                setTitle(menuItem.getTitle());
+                startActivity(intent);
+        }
+
         return false;
     }
 }
