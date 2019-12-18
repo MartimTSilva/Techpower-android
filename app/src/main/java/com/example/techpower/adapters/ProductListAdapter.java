@@ -56,6 +56,8 @@ public class ProductListAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
         }
 
+        viewHolder.update(position);
+
         return convertView;
     }
 

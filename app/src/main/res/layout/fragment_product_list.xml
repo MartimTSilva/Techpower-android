@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ProductListFragment">
 
-    <GridView
+    <ListView
         android:id="@+id/listView_products"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-    </GridView>
+    </ListView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

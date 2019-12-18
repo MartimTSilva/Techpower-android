@@ -20,6 +20,7 @@ import com.example.techpower.adapters.ProductListAdapter;
 import com.example.techpower.listeners.ProductListener;
 import com.example.techpower.models.Product;
 import com.example.techpower.models.SingletonStore;
+import com.example.techpower.utils.ProductJsonParser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -99,5 +100,11 @@ public class ProductListFragment extends Fragment implements ProductListener {
     public void onRefreshProductList(ArrayList<Product> productArrayList) {
         mProductListAdapter = new ProductListAdapter(getContext(), productArrayList);
         mListViewProducts.setAdapter(mProductListAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SingletonStore.getInstance(getContext()).getAllProductsAPI(getContext(), ProductJsonParser.isConnectionInternet(getContext()));
     }
 }
