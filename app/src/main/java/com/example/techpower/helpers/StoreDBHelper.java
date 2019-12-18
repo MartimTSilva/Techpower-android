@@ -48,6 +48,7 @@ public class StoreDBHelper extends SQLiteOpenHelper {
         String createTableCategory = "CREATE TABLE " + CATEGORY_TABLE_NAME + "(" +
                 CATEGORY_ID + " INTEGER PRIMARY KEY, " +
                 CATEGORY_NAME + " TEXT NOT NULL, " +
+                CATEGORY_PARENT + " INTEGER, " +
                 "FOREIGN KEY (" + CATEGORY_PARENT + ") REFERENCES " + CATEGORY_TABLE_NAME + "(" + CATEGORY_ID + "));";
 
         // Product create table SQL
@@ -57,17 +58,18 @@ public class StoreDBHelper extends SQLiteOpenHelper {
                 PRODUCT_DESCRIPTION + " TEXT NOT NULL, " +
                 PRODUCT_PRICE + " REAL NOT NULL, " +
                 PRODUCT_IMAGE + " TEXT NOT NULL, " +
+                PRODUCT_CATEGORY + " INTEGER, " +
                 "FOREIGN KEY (" + PRODUCT_CATEGORY + ") REFERENCES " + CATEGORY_TABLE_NAME + "(" + CATEGORY_ID + "));";
 
         // Create tables
-        database.execSQL(createTableCategory);
-        database.execSQL(createTableProduct);
+        db.execSQL(createTableCategory);
+        db.execSQL(createTableProduct);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        database.execSQL("DROP TABLE IF EXISTS " + PRODUCT_TABLE_NAME);
-        database.execSQL("DROP TABLE IF EXISTS " + CATEGORY_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + PRODUCT_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + CATEGORY_TABLE_NAME);
         this.onCreate(db);
     }
 
