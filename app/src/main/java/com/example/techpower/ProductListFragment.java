@@ -12,21 +12,31 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.example.techpower.adapters.ProductListAdapter;
+import com.example.techpower.listeners.ProductListener;
+import com.example.techpower.models.Product;
+import com.example.techpower.models.SingletonStore;
+import com.example.techpower.utils.ProductJsonParser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProductListFragment extends Fragment {
+public class ProductListFragment extends Fragment implements ProductListener {
 
+    private ListView mListViewProducts;
+    private ProductListAdapter mProductListAdapter;
 
     public ProductListFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +47,16 @@ public class ProductListFragment extends Fragment {
         // Add options menu
         setHasOptionsMenu(true);
 
+        mListViewProducts = view.findViewById(R.id.listView_products);
+
+        // Set on list item click
+        mListViewProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // TODO: Add intent to open product details
+            }
+        });
+
         // Set fab click listener
         FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +65,9 @@ public class ProductListFragment extends Fragment {
                 // TODO: Add intent to open shopping cart activity
             }
         });
+
+        // Add Singleton Listener
+        SingletonStore.getInstance(getContext()).setProductListener(this);
 
         return view;
     }
@@ -71,5 +94,17 @@ public class ProductListFragment extends Fragment {
         });
 
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onRefreshProductList(ArrayList<Product> productArrayList) {
+        mProductListAdapter = new ProductListAdapter(getContext(), productArrayList);
+        mListViewProducts.setAdapter(mProductListAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SingletonStore.getInstance(getContext()).getAllProductsAPI(getContext(), ProductJsonParser.isConnectionInternet(getContext()));
     }
 }
