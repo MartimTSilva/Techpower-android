@@ -9,7 +9,8 @@
     <!-- Settings -->
     <string name="settings_et_api">Insert url here</string>
     <string name="settings_tv_api">API Url:</string>
-    <string name="settings_btn_connect">Connect</string>
+    <string name="settings_btn_connect">Save</string>
+    <string name="settings_api_saved">API Saved Successfully</string>
 
     <!-- Logout -->
     <string name="nav_logout">Logout</string>
