@@ -45,26 +45,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
     }
 
-    // TODO: Finish button press
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
             case R.id.nav_login:
                 Intent login_intent = new Intent(this, LoginActivity.class);
-                setTitle(menuItem.getTitle());
                 startActivity(login_intent);
                 break;
 
             case R.id.nav_signup:
                 Intent signup_intent = new Intent(this, SignUpActivity.class);
-                setTitle(menuItem.getTitle());
                 startActivity(signup_intent);
                 break;
 
             case R.id.nav_settings:
-                Intent settings_intent = new Intent(this, Settings.class);
-                setTitle(menuItem.getTitle());
+                Intent settings_intent = new Intent(this, SettingsActivity.class);
                 startActivity(settings_intent);
                 break;
         }
