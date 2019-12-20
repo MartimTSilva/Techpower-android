@@ -37,6 +37,9 @@
     <string name="et_nif">NIF</string>
     <string name="tv_signup">Sign Up</string>
 
+    <!-- Product Details -->
+    <string name="details_btn_addToCart">Add to Cart</string>
+
     <!-- Form Error Messages -->
     <string name="error_field_required">This field is required</string>
     <string name="error_invalid_tooShort">too short</string>
