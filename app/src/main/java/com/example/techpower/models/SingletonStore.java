@@ -65,6 +65,16 @@ public class SingletonStore {
         }
     }
 
+    public Product getProduct(int idProduct) {
+        for (Product product: mProductList) {
+            if (product.getId() == idProduct) {
+                return product;
+            }
+        }
+
+        return null;
+    }
+
     public void insertProductDB(Product product) {
         mStoreDB.insertProductDB(product);
     }
