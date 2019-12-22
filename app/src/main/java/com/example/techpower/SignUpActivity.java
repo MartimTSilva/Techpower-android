@@ -2,11 +2,25 @@ package com.example.techpower;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.example.techpower.models.SingletonStore;
+import com.example.techpower.models.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.widget.ProgressBar;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -32,7 +46,7 @@ public class SignUpActivity extends AppCompatActivity {
         btn_signUp = findViewById(R.id.button_signup);
         mUsername = findViewById(R.id.editText_username);
         mEmail = findViewById(R.id.editText_email);
-        mPassword = findViewById(R.id.editText_ApiUrl);
+        mPassword = findViewById(R.id.editText_password);
         mConfirmPassword = findViewById(R.id.editText_confirmPassword);
         mFirstName = findViewById(R.id.editText_firstName);
         mLastName = findViewById(R.id.editText_lastName);
@@ -52,22 +66,31 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void attemptRegistration() {
-
         // Reseta os erros no formulário
+        mUsername.setError(null);
         mEmail.setError(null);
         mPassword.setError(null);
+        mFirstName.setError(null);
+        mLastName.setError(null);
+        mPhone.setError(null);
+        mAddress.setError(null);
+        mPostalCode.setError(null);
+        mCity.setError(null);
+        mCountry.setError(null);
+        mNif.setError(null);
 
-        String username = mUsername.getText().toString();
-        String email = mEmail.getText().toString();
-        String password = mPassword.getText().toString();
-        String firstName = mFirstName.getText().toString();
-        String lastName = mLastName.getText().toString();
-        String phone = mPhone.getText().toString();
-        String address = mAddress.getText().toString();
-        String postalCode = mPostalCode.getText().toString();
-        String city = mCity.getText().toString();
-        String country = mCountry.getText().toString();
-        String nif = mNif.getText().toString();
+
+        final String username = mUsername.getText().toString();
+        final String email = mEmail.getText().toString();
+        final String password = mPassword.getText().toString();
+        final String firstName = mFirstName.getText().toString();
+        final String lastName = mLastName.getText().toString();
+        final String phone = mPhone.getText().toString();
+        final String address = mAddress.getText().toString();
+        final String postalCode = mPostalCode.getText().toString();
+        final String city = mCity.getText().toString();
+        final String country = mCountry.getText().toString();
+        final String nif = mNif.getText().toString();
 
 
         boolean cancel = false;
@@ -221,6 +244,7 @@ public class SignUpActivity extends AppCompatActivity {
             cancel = true;
         }
 
+
         // Vê se o utilizador inseriu um nif
         if (TextUtils.isEmpty(nif)) {
             mNif.setError(getString(R.string.error_field_required));
@@ -232,12 +256,14 @@ public class SignUpActivity extends AppCompatActivity {
             cancel = true;
         }
 
+
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
+            // Se existirem erros será focado o primeiro input do form com erros
             focusView.requestFocus();
         } else {
-            // TODO: INSERT INTO DB
+            SingletonStore.getInstance(getApplicationContext()).signupUserAPI(signupUser(), getApplicationContext());
+            setResult(Activity.RESULT_OK);
+            finish();
         }
     }
 
@@ -248,5 +274,20 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean isPasswordValid(String password) {
         String confirmPassword = mConfirmPassword.getText().toString();
         return confirmPassword.equals(password) && password.length() > 5;
+    }
+
+    private User signupUser(){
+        String username = mUsername.getText().toString();
+        String email = mEmail.getText().toString();
+        String password = mPassword.getText().toString();
+        String firstName = mFirstName.getText().toString();
+        String lastName = mLastName.getText().toString();
+        String phone = mPhone.getText().toString();
+        String address = mAddress.getText().toString();
+        String postalCode = mPostalCode.getText().toString();
+        String city = mCity.getText().toString();
+        String country = mCountry.getText().toString();
+        String nif = mNif.getText().toString();
+        return new User(username, email, password, firstName, lastName, phone, address, nif, postalCode, city, country);
     }
 }
