@@ -112,6 +112,6 @@ public class ProductListFragment extends Fragment implements ProductListener {
     @Override
     public void onResume() {
         super.onResume();
-        SingletonStore.getInstance(getContext()).getAllProductsAPI(getContext(), ProductJsonParser.isConnectionInternet(getContext()));
+        SingletonStore.getInstance(getContext()).getAllProductsAPI(getContext(), SingletonStore.isConnectedInternet(getContext()));
     }
 }

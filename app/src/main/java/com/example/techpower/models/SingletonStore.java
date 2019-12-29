@@ -2,6 +2,8 @@ package com.example.techpower.models;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -77,6 +79,13 @@ public class SingletonStore {
 
     public void insertProductDB(Product product) {
         mStoreDB.insertProductDB(product);
+    }
+
+    public static boolean isConnectedInternet(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+
+        return networkInfo != null && networkInfo.isConnected();
     }
 
     /* API ACCESS */

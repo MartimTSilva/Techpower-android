@@ -56,11 +56,4 @@ public class ProductJsonParser {
 
         return auxProduct;
     }
-
-    public static boolean isConnectionInternet(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-
-        return networkInfo != null && networkInfo.isConnected();
-    }
 }
