@@ -103,7 +103,7 @@ public class SingletonStore {
                 mProductListener.onRefreshProductList(mProductList);
             }
         } else {
-            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mApiUrl + "products", null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mApiUrl + "/api/products", null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     mProductList = ProductJsonParser.parserJsonProducts(response, context);
@@ -123,7 +123,7 @@ public class SingletonStore {
     }
 
     public void signupUserAPI(final User user, final Context context) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, mApiUrl + "user/signup",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, mApiUrl + "/api/users",
             new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
