@@ -20,6 +20,7 @@
     <!-- Login -->
     <string name="btn_login">Login</string>
     <string name="login_success">Welcome</string>
+    <string name="login_incorrect">Username or password incorrect</string>
     
     <!-- Sign Up -->
     <string name="nav_signup">Sign up</string>
