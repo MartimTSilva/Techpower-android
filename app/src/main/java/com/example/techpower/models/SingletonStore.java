@@ -1,6 +1,8 @@
 package com.example.techpower.models;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -9,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.techpower.R;
 import com.example.techpower.helpers.StoreDBHelper;
 import com.example.techpower.listeners.ProductListener;
 import com.example.techpower.utils.ProductJsonParser;
@@ -22,8 +25,7 @@ public class SingletonStore {
     private static SingletonStore instance = null;
     private static RequestQueue sVolleyQueue;
 
-    // TODO: Get API URL from settings
-    private final String mApiUrl = "http://192.168.1.64:8080/api/products";
+    private static String mApiUrl;
 
     private ArrayList<Product> mProductList;
     private StoreDBHelper mStoreDB;
@@ -33,6 +35,9 @@ public class SingletonStore {
         if (instance == null) {
             instance = new SingletonStore(context);
         }
+        SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.app_preferences), context.MODE_PRIVATE);
+        mApiUrl = preferences.getString(context.getString(R.string.app_api), "");
+
         sVolleyQueue = Volley.newRequestQueue(context);
 
         return instance;
@@ -60,6 +65,16 @@ public class SingletonStore {
         }
     }
 
+    public Product getProduct(int idProduct) {
+        for (Product product: mProductList) {
+            if (product.getId() == idProduct) {
+                return product;
+            }
+        }
+
+        return null;
+    }
+
     public void insertProductDB(Product product) {
         mStoreDB.insertProductDB(product);
     }
@@ -75,7 +90,7 @@ public class SingletonStore {
                 mProductListener.onRefreshProductList(mProductList);
             }
         } else {
-            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mApiUrl, null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mApiUrl + "/api/products", null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     mProductList = ProductJsonParser.parserJsonProducts(response, context);

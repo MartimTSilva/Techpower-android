@@ -1,6 +1,8 @@
 package com.example.techpower;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.content.Intent;
+import android.widget.Toast;
 
 import com.example.techpower.adapters.ProductListAdapter;
 import com.example.techpower.listeners.ProductListener;
@@ -53,7 +57,10 @@ public class ProductListFragment extends Fragment implements ProductListener {
         mListViewProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: Add intent to open product details
+                Product product = (Product) parent.getItemAtPosition(position);
+                Intent product_intent = new Intent(getActivity(), ProductDetailsActivity.class);
+                product_intent.putExtra("ID", product.getId());
+                startActivity(product_intent);
             }
         });
 
