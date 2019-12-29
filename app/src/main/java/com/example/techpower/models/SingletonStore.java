@@ -123,7 +123,7 @@ public class SingletonStore {
     }
 
     public void signupUserAPI(final User user, final Context context) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, mApiUrl + "user/signup",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, mApiUrl + "/api/users",
             new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
