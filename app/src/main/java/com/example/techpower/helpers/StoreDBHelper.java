@@ -142,7 +142,7 @@ public class StoreDBHelper extends SQLiteOpenHelper {
                         cursor.getInt(5));
                 auxProduct.setId(cursor.getInt(0));
                 products.add(auxProduct);
-            } while (cursor.moveToFirst());
+            } while (cursor.moveToNext());
         }
 
         cursor.close();
