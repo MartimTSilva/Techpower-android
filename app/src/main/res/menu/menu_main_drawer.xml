@@ -3,24 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single" >
-
+    <group android:id="@+id/nav_footer" android:orderInCategory="3">
+        <item
+            android:id="@+id/nav_settings"
+            android:title="@string/nav_settings"/>
     </group>
-
-    <item android:title="@string/nav_settings">
-        <menu>
-            <item
-                android:id="@+id/nav_logout"
-                android:title="@string/nav_logout"/>
-            <item
-                android:id="@+id/nav_settings"
-                android:title="@string/nav_settings"/>
-            <item 
-                android:id="@+id/nav_login"
-                android:title="@string/nav_login"/>
-            <item 
-                android:id="@+id/nav_signup"
-                android:title="@string/nav_signup"/>
-        </menu>
-    </item>
 </menu>
