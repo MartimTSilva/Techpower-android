@@ -90,7 +90,7 @@ public class StoreDBHelper extends SQLiteOpenHelper {
                         );
                 auxCategory.setId(cursor.getInt(0));
                 categories.add(auxCategory);
-            } while (cursor.moveToFirst());
+            } while (cursor.moveToNext());
         }
 
         cursor.close();

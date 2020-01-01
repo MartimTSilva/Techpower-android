@@ -16,12 +16,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.techpower.models.Category;
+import com.example.techpower.models.SingletonStore;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DrawerLayout drawer;
-    private FragmentManager fragmentManager;
+    private DrawerLayout mDrawerLayout;
+    private FragmentManager mFragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +36,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
-        drawer = findViewById(R.id.drawer);
+        mDrawerLayout = findViewById(R.id.drawer);
 
         Menu menu = navigationView.getMenu();
+
+        SingletonStore.getInstance(getApplicationContext()).getAllCategoriesAPI(getApplicationContext(), SingletonStore.isConnectedInternet(getApplicationContext()));
+        // Add category submenu
+        ArrayList<Category> categoryList = SingletonStore.getInstance(getApplicationContext()).getCategoriesDB();
+        Menu categoriesSubMenu = menu.addSubMenu(Menu.NONE, Menu.NONE, 0, R.string.nav_categories);
+        for (Category category: categoryList) {
+            categoriesSubMenu.add(Menu.NONE, category.getId(), Menu.NONE,category.getName());
+        }
+        navigationView.invalidate();
 
         // Add account submenu
         SharedPreferences preferences = getSharedPreferences(getString(R.string.app_preferences), MODE_PRIVATE);
@@ -47,18 +60,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         navigationView.invalidate();
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
-        drawer.addDrawerListener(toggle);
+        mDrawerLayout.addDrawerListener(toggle);
         navigationView.setNavigationItemSelectedListener(this);
 
-        fragmentManager = getSupportFragmentManager();
+        mFragmentManager = getSupportFragmentManager();
 
         // TODO: Show user data on header
 
         Fragment fragment = new ProductListFragment();
         setTitle("Techpower");
-        fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
+        mFragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
     }
 
     @Override
@@ -85,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
 
-        drawer.closeDrawer(GravityCompat.START);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
     }

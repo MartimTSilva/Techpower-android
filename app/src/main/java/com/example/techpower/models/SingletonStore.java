@@ -16,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.techpower.R;
 import com.example.techpower.helpers.StoreDBHelper;
 import com.example.techpower.listeners.ProductListener;
+import com.example.techpower.utils.CategoryJsonParser;
 import com.example.techpower.utils.ProductJsonParser;
 
 import org.json.JSONArray;
@@ -30,6 +31,7 @@ public class SingletonStore {
     private static String mApiUrl;
 
     private ArrayList<Product> mProductList;
+    private ArrayList<Category> mCategoryList;
     private StoreDBHelper mStoreDB;
     private ProductListener mProductListener;
 
@@ -47,6 +49,7 @@ public class SingletonStore {
 
     private SingletonStore(Context context) {
         mProductList = new ArrayList<>();
+        mCategoryList = new ArrayList<>();
         mStoreDB = new StoreDBHelper(context);
     }
 
@@ -81,6 +84,19 @@ public class SingletonStore {
         mStoreDB.insertProductDB(product);
     }
 
+    /* CRUD Categories */
+
+    public void insertCategoriesDB(ArrayList<Category> categoryList) {
+        mStoreDB.deleteAllCategoriesDB();
+        for (Category category: categoryList) {
+            mStoreDB.insertCategoryDB(category);
+        }
+    }
+
+    public ArrayList<Category> getCategoriesDB() {
+        return mStoreDB.getAllCategoriesDB();
+    }
+
     public static boolean isConnectedInternet(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
@@ -107,6 +123,26 @@ public class SingletonStore {
                     if (mProductListener != null) {
                         mProductListener.onRefreshProductList(mProductList);
                     }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            sVolleyQueue.add(request);
+        }
+    }
+
+    public void getAllCategoriesAPI(final Context context, boolean isConnected) {
+        if(!isConnected) {
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
+        } else {
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mApiUrl + "/api/categories", null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    mCategoryList = CategoryJsonParser.parserJsonCategories(response, context);
+                    insertCategoriesDB(mCategoryList);
                 }
             }, new Response.ErrorListener() {
                 @Override

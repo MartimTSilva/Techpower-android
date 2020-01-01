@@ -3,12 +3,12 @@ package com.example.techpower.models;
 public class Category {
     private int id;
     private String name;
-    private int parent_id;
+    private int parentId;
 
-    public Category(int id, String name, int parent_id) {
+    public Category(int id, String name, int parentId) {
         this.id = id;
         this.name = name;
-        this.parent_id = parent_id;
+        this.parentId = parentId;
     }
 
     public int getId() {
@@ -28,10 +28,10 @@ public class Category {
     }
 
     public int getParent_id() {
-        return parent_id;
+        return parentId;
     }
 
     public void setParent_id(int parent_id) {
-        this.parent_id = parent_id;
+        this.parentId = parent_id;
     }
 }
