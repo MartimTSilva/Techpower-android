@@ -79,7 +79,6 @@ public class ProductListFragment extends Fragment implements ProductListener {
         return view;
     }
 
-    // TODO: Finish search
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Add menu_search as options menu
@@ -96,7 +95,15 @@ public class ProductListFragment extends Fragment implements ProductListener {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return false;
+                ArrayList<Product> filteredProducts = new ArrayList<Product>();
+                for (Product product : SingletonStore.getInstance(getContext()).getProductsDB()) {
+                    if (product.getName().toLowerCase().contains(newText.toLowerCase())) {
+                        filteredProducts.add(product);
+                    }
+                }
+                mListViewProducts.setAdapter(new ProductListAdapter(getContext(), filteredProducts));
+
+                return true;
             }
         });
 
