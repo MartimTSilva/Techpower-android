@@ -153,4 +153,34 @@ public class SingletonStore {
             sVolleyQueue.add(request);
         }
     }
+
+    public void getProductsByCategoryAPI(final Context context, boolean isConnected, int id_category) {
+        if (!isConnected) {
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
+            mProductList = mStoreDB.getAllProductsByCategoryDB(id_category);
+
+            if (mProductListener != null) {
+                mProductListener.onRefreshProductList(mProductList);
+            }
+            if (mProductList.isEmpty()){
+                Toast.makeText(context, "This category doesn't have any products", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mApiUrl + "/api/categories/" + id_category + "/products", null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    mProductList = ProductJsonParser.parserJsonProducts(response, context);
+                    if (mProductListener != null) {
+                        mProductListener.onRefreshProductList(mProductList);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            sVolleyQueue.add(request);
+        }
+    }
 }
