@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         mQueue = Volley.newRequestQueue(this);
         mLoginButton = findViewById(R.id.button_login);
         mUsernameEditText = findViewById(R.id.editText_username);
-        mPasswordEditText = findViewById(R.id.editText_ApiUrl);
+        mPasswordEditText = findViewById(R.id.editText_password);
 
         SharedPreferences preferences = getSharedPreferences(getString(R.string.app_preferences), MODE_PRIVATE);
         mApiUrl = preferences.getString(getString(R.string.app_api), "");
