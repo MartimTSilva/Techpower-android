@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             accountSubMenu.add(Menu.NONE, R.string.nav_login, Menu.NONE, R.string.nav_login);
             accountSubMenu.add(Menu.NONE, R.string.nav_signup, Menu.NONE, R.string.nav_signup);
         } else {
+            accountSubMenu.add(Menu.NONE, R.string.nav_userPage, Menu.NONE, R.string.nav_userPage);
             accountSubMenu.add(Menu.NONE, R.string.nav_logout, Menu.NONE, R.string.nav_logout);
         }
         navigationView.invalidate();
@@ -95,6 +96,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_settings:
                 Intent settings_intent = new Intent(this, SettingsActivity.class);
                 startActivity(settings_intent);
+                break;
+
+            case R.string.nav_userPage:
+                Intent userPage_intent = new Intent(this, UserActivity.class);
+                startActivity(userPage_intent);
                 break;
         }
 
