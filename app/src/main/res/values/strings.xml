@@ -46,6 +46,9 @@
     <!-- User Page -->
     <string name="update_success">User data updated successfully!</string>
     <string name="update_error">There was an error updating user data</string>
+    <string name="delete_success">User deleted successfully!</string>
+    <string name="btn_update">UPDATE</string>
+    <string name="btn_delete">DELETE ACCOUNT</string>
 
     <!-- Product Details -->
     <string name="details_btn_addToCart">Add to Cart</string>

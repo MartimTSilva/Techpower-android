@@ -180,7 +180,19 @@
                 android:id="@+id/button_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="UPDATE" />
+                android:text="@string/btn_update" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+            <Button
+                android:id="@+id/button_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_delete"
+                android:background="@color/colorRed"
+                android:textColor="@color/colorWhite"/>
         </LinearLayout>
     </ScrollView>
 

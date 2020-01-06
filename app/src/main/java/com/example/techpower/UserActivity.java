@@ -23,10 +23,9 @@ import java.util.ArrayList;
 public class UserActivity extends AppCompatActivity {
 
     Button btn_update;
+    Button btn_delete;
     EditText mUsername;
     EditText mEmail;
-    EditText mPassword;
-    EditText mConfirmPassword;
     EditText mFirstName;
     EditText mLastName;
     EditText mPhone;
@@ -45,6 +44,7 @@ public class UserActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         btn_update = findViewById(R.id.button_update);
+        btn_delete = findViewById(R.id.button_delete);
         mUsername = findViewById(R.id.editText_userPage_username);
         mEmail = findViewById(R.id.editText_userPage_email);
         mFirstName = findViewById(R.id.editText_userPage_firstName);
@@ -80,14 +80,25 @@ public class UserActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
+        final String authentication_key = preferences.getString("auth", null);
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String authentication_key = preferences.getString("auth", null);
                 SingletonStore.getInstance(getApplicationContext()).updateUserAPI(updateUser() ,getApplicationContext(), authentication_key, user_id);
                 //TODO: Se o user alterar o username, fazer logout automaticamente
             }
         });
+
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SingletonStore.getInstance(getApplicationContext()).deleteUserAPI(getApplicationContext(), authentication_key, user_id);
+                finish();
+                //Todo: Logout user
+            }
+        });
+
     }
 
     private User updateUser(){

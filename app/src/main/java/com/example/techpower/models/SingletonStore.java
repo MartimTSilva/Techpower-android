@@ -273,4 +273,29 @@ public class SingletonStore {
         };
         sVolleyQueue.add(stringRequest);
     }
+
+    public void deleteUserAPI(final Context context, final String authentication_key, int user_id){
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, mApiUrl + "/api/users/" + user_id,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(context, R.string.delete_success, Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, "Delete Error: " + error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", authentication_key);
+                return params;
+            }
+        };
+        sVolleyQueue.add(stringRequest);
+    }
 }
