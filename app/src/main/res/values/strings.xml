@@ -42,6 +42,7 @@
 
     <!-- Product Details -->
     <string name="details_btn_addToCart">Add to Cart</string>
+    <string name="add_cart">Product added to cart</string>
 
     <!-- Form Error Messages -->
     <string name="error_field_required">This field is required</string>
