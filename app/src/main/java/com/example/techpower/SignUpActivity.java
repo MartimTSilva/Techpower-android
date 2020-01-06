@@ -1,11 +1,13 @@
 package com.example.techpower;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +44,8 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         btn_signUp = findViewById(R.id.button_signup);
         mUsername = findViewById(R.id.editText_username);
@@ -289,5 +293,11 @@ public class SignUpActivity extends AppCompatActivity {
         String city = mCity.getText().toString();
         String country = mCountry.getText().toString();
         return new User(username, email, password, firstName, lastName, phone, address, nif, postal_code, city, country);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        this.finish();
+        return super.onOptionsItemSelected(item);
     }
 }

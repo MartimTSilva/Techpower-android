@@ -1,11 +1,13 @@
 package com.example.techpower;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mQueue = Volley.newRequestQueue(this);
         mLoginButton = findViewById(R.id.button_login);
@@ -97,5 +101,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         mQueue.add(request);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        this.finish();
+        return super.onOptionsItemSelected(item);
     }
 }

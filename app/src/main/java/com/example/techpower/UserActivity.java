@@ -1,9 +1,11 @@
 package com.example.techpower;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +41,8 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         btn_update = findViewById(R.id.button_update);
         mUsername = findViewById(R.id.editText_userPage_username);
@@ -98,5 +102,11 @@ public class UserActivity extends AppCompatActivity {
         String city = mCity.getText().toString();
         String country = mCountry.getText().toString();
         return new User(username, email, null, firstName, lastName, phone, address, nif, postal_code, city, country);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        this.finish();
+        return super.onOptionsItemSelected(item);
     }
 }
