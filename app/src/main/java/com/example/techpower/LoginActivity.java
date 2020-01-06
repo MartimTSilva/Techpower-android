@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -62,14 +63,20 @@ public class LoginActivity extends AppCompatActivity {
         paramsMap.put("username", mUsernameEditText.getText().toString());
         paramsMap.put("password", mPasswordEditText.getText().toString());
 
+        // Create authentication key
+        String base = mUsernameEditText.getText().toString() + ":" + mPasswordEditText.getText().toString();
+        final String authentication_key = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,  mApiUrl + "/api/users/login", new JSONObject(paramsMap), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 // Save authkey to shared preferences
                 SharedPreferences preferences = getSharedPreferences(getString(R.string.app_preferences), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-
                 try {
+                    editor.putString("auth", authentication_key);
+                    editor.putString("user", response.getString("user"));
+                    editor.putString("profile", response.getString("profile"));
                     editor.putString("authkey", response.getString("auth-key"));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -89,7 +96,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
         mQueue.add(request);
     }
 }

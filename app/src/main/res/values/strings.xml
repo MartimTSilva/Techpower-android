@@ -43,6 +43,10 @@
     <string name="signup_success">Account Created Successfully!</string>
     <string name="signup_error">ERROR!\nUsername, E-mail or NIF Already in use.</string>
 
+    <!-- User Page -->
+    <string name="update_success">User data updated successfully!</string>
+    <string name="update_error">There was an error updating user data</string>
+
     <!-- Product Details -->
     <string name="details_btn_addToCart">Add to Cart</string>
     <string name="add_cart">Product added to cart</string>

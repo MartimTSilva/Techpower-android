@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.techpower.MainActivity;
@@ -211,6 +213,58 @@ public class SingletonStore {
                 params.put("phone", user.getPhone());
                 params.put("nif", user.getNif());
                 params.put("address", user.getAddress());
+                params.put("postal_code", user.getPostalCode());
+                params.put("city", user.getCity());
+                params.put("country", user.getCountry());
+                return params;
+            }
+        };
+        sVolleyQueue.add(stringRequest);
+    }
+
+    public void updateUserAPI(final User user, final Context context, final String authentication_key, int user_id){
+        StringRequest stringRequest = new StringRequest(Request.Method.PUT, mApiUrl + "/api/users/" + user_id,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("isSuccess");
+
+                            if (success.equals("201")) {
+                                Toast.makeText(context, R.string.update_success, Toast.LENGTH_LONG).show();
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(context, R.string.update_error, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, "Update Error: " + error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", authentication_key);
+                return params;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("username", user.getUsername());
+                params.put("email", user.getEmail());
+                params.put("firstName", user.getFirstName());
+                params.put("lastName", user.getLastName());
+                params.put("phone", user.getPhone());
+                params.put("address", user.getAddress());
+                params.put("nif", user.getNif());
                 params.put("postal_code", user.getPostalCode());
                 params.put("city", user.getCity());
                 params.put("country", user.getCountry());
