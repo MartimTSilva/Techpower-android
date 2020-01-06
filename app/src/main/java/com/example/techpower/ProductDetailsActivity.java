@@ -58,7 +58,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: ADD TO CART
+                SingletonStore.getInstance(getApplicationContext()).addProductCart(mProduct.getId(), 1);
+                Toast.makeText(getApplicationContext(), R.string.add_cart, Toast.LENGTH_SHORT).show();
             }
         });
     }

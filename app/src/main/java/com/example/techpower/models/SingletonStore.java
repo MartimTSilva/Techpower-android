@@ -22,6 +22,8 @@ import com.example.techpower.utils.ProductJsonParser;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SingletonStore {
 
@@ -34,6 +36,7 @@ public class SingletonStore {
     private ArrayList<Category> mCategoryList;
     private StoreDBHelper mStoreDB;
     private ProductListener mProductListener;
+    private Map<Integer, Integer> mCart;
 
     public static synchronized SingletonStore getInstance(Context context) {
         if (instance == null) {
@@ -51,6 +54,7 @@ public class SingletonStore {
         mProductList = new ArrayList<>();
         mCategoryList = new ArrayList<>();
         mStoreDB = new StoreDBHelper(context);
+        mCart = new HashMap<>();
     }
 
     public void setProductListener(ProductListener productListener) {
@@ -102,6 +106,12 @@ public class SingletonStore {
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 
         return networkInfo != null && networkInfo.isConnected();
+    }
+
+    /* CRUD CART */
+
+    public void addProductCart(int productId, int quantity) {
+        mCart.put(productId, quantity);
     }
 
     /* API ACCESS */
