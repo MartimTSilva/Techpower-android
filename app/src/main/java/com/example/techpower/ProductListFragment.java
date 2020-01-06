@@ -69,7 +69,8 @@ public class ProductListFragment extends Fragment implements ProductListener {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Add intent to open shopping cart activity
+                Intent intent = new Intent(getContext(),CartActivity.class);
+                startActivity(intent);
             }
         });
 

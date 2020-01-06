@@ -22,7 +22,7 @@
     <string name="btn_login">Login</string>
     <string name="login_success">Welcome</string>
     <string name="login_incorrect">Username or password incorrect</string>
-    
+
     <!-- Sign Up -->
     <string name="nav_signup">Sign up</string>
     <string name="btn_signup">Sign up</string>
@@ -53,5 +53,10 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_invalid_phone">Phone number must have 9 digits</string>
     <string name="error_invalid_nif">NIF  must have 9 digits</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="textView_total">Total:</string>
+    <string name="btn_checkout">CHECKOUT</string>
 
 </resources>
