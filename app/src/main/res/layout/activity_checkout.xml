@@ -12,7 +12,7 @@
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Checkout"
+        android:text="@string/tv_Checkout"
         android:textColor="@android:color/background_dark"
         android:textSize="16sp" />
 
@@ -36,7 +36,6 @@
         android:id="@+id/textViewName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:textSize="15sp"
         android:textStyle="bold" />
 
@@ -44,28 +43,24 @@
         android:id="@+id/textViewAdress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:textSize="15sp" />
 
     <TextView
         android:id="@+id/textViewPostalCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:textSize="15sp" />
 
     <TextView
         android:id="@+id/textViewCity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:textSize="15sp" />
 
     <TextView
         android:id="@+id/textViewCountry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:textSize="15sp" />
 
     <Space
@@ -79,15 +74,13 @@
         android:layout_height="wrap_content"
         android:text="@string/tv_items" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
 
         <ListView
             android:id="@+id/listViewCartItems"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -98,7 +91,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
@@ -124,4 +116,5 @@
             android:layout_weight="1"
             android:text="@string/btn_PlaceOrder" />
     </LinearLayout>
+</LinearLayout>
 

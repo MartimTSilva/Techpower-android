@@ -59,5 +59,6 @@
     <string name="btn_PlaceOrder">Place Order</string>
     <string name="tv_ShippingAdress">SHIPPING ADDRESS</string>
     <string name="tv_items">ITEMS</string>
+    <string name="tv_Checkout">Checkout</string>
 
 </resources>
