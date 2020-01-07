@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout mDrawerLayout;
     private FragmentManager mFragmentManager;
+    private NavigationView navigationView;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,30 +37,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         mDrawerLayout = findViewById(R.id.drawer);
 
-        Menu menu = navigationView.getMenu();
-
-        SingletonStore.getInstance(getApplicationContext()).getAllCategoriesAPI(getApplicationContext(), SingletonStore.isConnectedInternet(getApplicationContext()));
-        // Add category submenu
-        ArrayList<Category> categoryList = SingletonStore.getInstance(getApplicationContext()).getCategoriesDB();
-        Menu categoriesSubMenu = menu.addSubMenu(Menu.NONE, Menu.NONE, 0, R.string.nav_categories);
-        for (Category category: categoryList) {
-            categoriesSubMenu.add(Menu.NONE, category.getId(), Menu.NONE,category.getName());
-        }
-        navigationView.invalidate();
-
-        // Add account submenu
-        SharedPreferences preferences = getSharedPreferences(getString(R.string.app_preferences), MODE_PRIVATE);
-        Menu accountSubMenu = menu.addSubMenu(Menu.NONE, Menu.NONE, 1,"Account");
-        if (preferences.getString("authkey", null) == null) {
-            accountSubMenu.add(Menu.NONE, R.string.nav_login, Menu.NONE, R.string.nav_login);
-            accountSubMenu.add(Menu.NONE, R.string.nav_signup, Menu.NONE, R.string.nav_signup);
-        } else {
-            accountSubMenu.add(Menu.NONE, R.string.nav_logout, Menu.NONE, R.string.nav_logout);
-        }
-        navigationView.invalidate();
+        menu = navigationView.getMenu();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
@@ -72,6 +54,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment fragment = new ProductListFragment();
         setTitle("Techpower");
         mFragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        menu.removeGroup(R.string.nav_categories);
+        menu.removeGroup(R.string.nav_account);
+
+        SingletonStore.getInstance(getApplicationContext()).getAllCategoriesAPI(getApplicationContext(), SingletonStore.isConnectedInternet(getApplicationContext()));
+        // Add category submenu
+        ArrayList<Category> categoryList = SingletonStore.getInstance(getApplicationContext()).getCategoriesDB();
+        Menu categoriesSubMenu = menu.addSubMenu(R.string.nav_categories, Menu.NONE, 0, R.string.nav_categories);
+        for (Category category: categoryList) {
+            categoriesSubMenu.add(Menu.NONE, category.getId(), Menu.NONE,category.getName());
+        }
+        navigationView.invalidate();
+
+        // Add account submenu
+        SharedPreferences preferences = getSharedPreferences(getString(R.string.app_preferences), MODE_PRIVATE);
+        Menu accountSubMenu = menu.addSubMenu(R.string.nav_account, Menu.NONE, 1, R.string.nav_account);
+        if (preferences.getString("authkey", null) == null) {
+            accountSubMenu.add(Menu.NONE, R.string.nav_login, Menu.NONE, R.string.nav_login);
+            accountSubMenu.add(Menu.NONE, R.string.nav_signup, Menu.NONE, R.string.nav_signup);
+        } else {
+            accountSubMenu.add(Menu.NONE, R.string.nav_logout, Menu.NONE, R.string.nav_logout);
+        }
+        navigationView.invalidate();
     }
 
     @Override
