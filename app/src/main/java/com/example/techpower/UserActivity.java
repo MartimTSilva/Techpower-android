@@ -34,8 +34,7 @@ public class UserActivity extends AppCompatActivity {
     EditText mPostalCode;
     EditText mCountry;
     EditText mNif;
-    int user_id = 0;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,31 +56,25 @@ public class UserActivity extends AppCompatActivity {
         mNif = findViewById(R.id.editText_userPage_nif);
 
         final SharedPreferences preferences = getSharedPreferences(getString(R.string.app_preferences), MODE_PRIVATE);
-        String userData = preferences.getString("user",null);
-        String profileData = preferences.getString("profile",null);
-        if (userData != null && profileData != null) {
-            try {
-                JSONObject userResponse = new JSONObject(userData);
-                JSONObject profileResponse = new JSONObject(profileData);
+        try {
+            mUsername.setText(preferences.getString("username", null));
+            mEmail.setText(preferences.getString("email", null));
+            mFirstName.setText(preferences.getString("firstName", null));
+            mLastName.setText(preferences.getString("lastName", null));
+            mPhone.setText(preferences.getString("phone", null));
+            mAddress.setText(preferences.getString("address", null));
+            mCity.setText(preferences.getString("city", null));
+            mPostalCode.setText(preferences.getString("postal_code", null));
+            mCountry.setText(preferences.getString("country", null));
+            mNif.setText(preferences.getString("nif", null));
 
-                user_id = userResponse.getInt("id");
-                mUsername.setText(userResponse.get("username").toString());
-                mEmail.setText(userResponse.get("email").toString());
-                mFirstName.setText(profileResponse.get("firstName").toString());
-                mLastName.setText(profileResponse.get("lastName").toString());
-                mPhone.setText(profileResponse.get("phone").toString());
-                mAddress.setText(profileResponse.get("address").toString());
-                mCity.setText(profileResponse.get("city").toString());
-                mPostalCode.setText(profileResponse.get("postal_code").toString());
-                mCountry.setText(profileResponse.get("country").toString());
-                mNif.setText(profileResponse.get("nif").toString());
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        final String authentication_key = preferences.getString("auth", null);
+        final String authentication_key = preferences.getString("authkey", null);
+        final String user_id = preferences.getString("id", null);
+
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

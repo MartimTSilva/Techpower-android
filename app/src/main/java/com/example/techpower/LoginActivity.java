@@ -67,10 +67,6 @@ public class LoginActivity extends AppCompatActivity {
         paramsMap.put("username", mUsernameEditText.getText().toString());
         paramsMap.put("password", mPasswordEditText.getText().toString());
 
-        // Create authentication key
-        String base = mUsernameEditText.getText().toString() + ":" + mPasswordEditText.getText().toString();
-        final String authentication_key = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,  mApiUrl + "/api/users/login", new JSONObject(paramsMap), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

@@ -81,13 +81,13 @@ public class SingletonStore {
 
     public void insertProductsDB(ArrayList<Product> productList) {
         mStoreDB.deleteAllProductDB();
-        for (Product product: productList) {
+        for (Product product : productList) {
             mStoreDB.insertProductDB(product);
         }
     }
 
     public Product getProduct(int idProduct) {
-        for (Product product: mProductList) {
+        for (Product product : mProductList) {
             if (product.getId() == idProduct) {
                 return product;
             }
@@ -104,7 +104,7 @@ public class SingletonStore {
 
     public void insertCategoriesDB(ArrayList<Category> categoryList) {
         mStoreDB.deleteAllCategoriesDB();
-        for (Category category: categoryList) {
+        for (Category category : categoryList) {
             mStoreDB.insertCategoryDB(category);
         }
     }
@@ -176,7 +176,7 @@ public class SingletonStore {
         }
     }
 
-    public void signupUserAPI(final User user, final Context context){
+    public void signupUserAPI(final User user, final Context context) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, mApiUrl + "/api/users",
                 new Response.Listener<String>() {
                     @Override
@@ -222,8 +222,9 @@ public class SingletonStore {
         sVolleyQueue.add(stringRequest);
     }
 
-    public void updateUserAPI(final User user, final Context context, final String authentication_key, int user_id){
-        StringRequest stringRequest = new StringRequest(Request.Method.PUT, mApiUrl + "/api/users/" + user_id,
+    public void updateUserAPI(final User user, final Context context, final String authentication_key, String user_id) {
+        StringRequest stringRequest = new StringRequest(Request.Method.PUT, mApiUrl + "/api/users/" + user_id
+                + "?access-token=" + authentication_key,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -249,13 +250,6 @@ public class SingletonStore {
                 }
         ) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", authentication_key);
-                return params;
-            }
-
-            @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("username", user.getUsername());
@@ -274,8 +268,9 @@ public class SingletonStore {
         sVolleyQueue.add(stringRequest);
     }
 
-    public void deleteUserAPI(final Context context, final String authentication_key, int user_id){
-        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, mApiUrl + "/api/users/" + user_id,
+    public void deleteUserAPI(final Context context, final String authentication_key, String user_id) {
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, mApiUrl + "/api/users/" + user_id +
+                "?access-token=" + authentication_key,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -289,12 +284,7 @@ public class SingletonStore {
                     }
                 }
         ) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", authentication_key);
-                return params;
-            }
+
         };
         sVolleyQueue.add(stringRequest);
     }
