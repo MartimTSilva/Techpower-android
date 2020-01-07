@@ -70,7 +70,18 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = preferences.edit();
 
                 try {
+                    editor.putString("id", response.getString("id"));
+                    editor.putString("username", response.getString("username"));
                     editor.putString("authkey", response.getString("auth-key"));
+                    editor.putString("email", response.getString("email"));
+                    editor.putString("firstName", response.getString("firstName"));
+                    editor.putString("lastName", response.getString("lastName"));
+                    editor.putString("phone", response.getString("phone"));
+                    editor.putString("address", response.getString("address"));
+                    editor.putString("nif", response.getString("nif"));
+                    editor.putString("postal_code", response.getString("postal_code"));
+                    editor.putString("city", response.getString("city"));
+                    editor.putString("country", response.getString("country"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
