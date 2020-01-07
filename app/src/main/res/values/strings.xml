@@ -22,7 +22,7 @@
     <string name="btn_login">Login</string>
     <string name="login_success">Welcome</string>
     <string name="login_incorrect">Username or password incorrect</string>
-    
+
     <!-- Sign Up -->
     <string name="nav_signup">Sign up</string>
     <string name="btn_signup">Sign up</string>
@@ -56,5 +56,8 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_invalid_phone">Phone number must have 9 digits</string>
     <string name="error_invalid_nif">NIF  must have 9 digits</string>
+    <string name="btn_PlaceOrder">Place Order</string>
+    <string name="tv_ShippingAdress">SHIPPING ADDRESS</string>
+    <string name="tv_items">ITEMS</string>
 
 </resources>
