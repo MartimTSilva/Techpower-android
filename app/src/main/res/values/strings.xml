@@ -49,6 +49,9 @@
     <string name="delete_success">User deleted successfully!</string>
     <string name="btn_update">UPDATE</string>
     <string name="btn_delete">DELETE ACCOUNT</string>
+    <string name="user_delete_alert_cancel">Cancel</string>
+    <string name="user_delete_alert_ok">Delete Account</string>
+    <string name="user_delete_alert_dialog">Are you sure you want to delete your account?</string>
 
     <!-- Product Details -->
     <string name="details_btn_addToCart">Add to Cart</string>

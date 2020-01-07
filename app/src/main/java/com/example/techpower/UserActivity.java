@@ -1,8 +1,10 @@
 package com.example.techpower;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -67,7 +69,6 @@ public class UserActivity extends AppCompatActivity {
             mPostalCode.setText(preferences.getString("postal_code", null));
             mCountry.setText(preferences.getString("country", null));
             mNif.setText(preferences.getString("nif", null));
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -78,7 +79,8 @@ public class UserActivity extends AppCompatActivity {
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SingletonStore.getInstance(getApplicationContext()).updateUserAPI(updateUser() ,getApplicationContext(), authentication_key, user_id);
+                SingletonStore.getInstance(getApplicationContext()).updateUserAPI(updateUser() ,getApplicationContext(),
+                        authentication_key, user_id);
                 //TODO: Se o user alterar o username, fazer logout automaticamente
             }
         });
@@ -86,12 +88,21 @@ public class UserActivity extends AppCompatActivity {
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SingletonStore.getInstance(getApplicationContext()).deleteUserAPI(getApplicationContext(), authentication_key, user_id);
-                finish();
-                //Todo: Logout user
+                AlertDialog.Builder builder = new AlertDialog.Builder(UserActivity.this);
+                builder.setMessage(R.string.user_delete_alert_dialog)
+                        .setPositiveButton(R.string.user_delete_alert_ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                SingletonStore.getInstance(getApplicationContext()).deleteUserAPI(getApplicationContext(),
+                                        authentication_key, user_id);
+                                //TODO: LOGOUT USER
+                                finish();
+                            }
+                        }).setNegativeButton(R.string.user_delete_alert_cancel, null);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
-
     }
 
     private User updateUser(){
