@@ -18,6 +18,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity android:name=".CheckoutActivity">
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CartActivity" />
+        </activity>
         <activity android:name=".ProductDetailsActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".LoginActivity" />
