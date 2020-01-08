@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
@@ -18,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.techpower.models.Category;
 import com.example.techpower.models.SingletonStore;
+import com.example.techpower.utils.Logout;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -99,7 +99,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.string.nav_logout:
-                // TODO: Remove user data
+                Logout.clientLogout(getApplicationContext());
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
                 break;
 
             case R.id.nav_settings:

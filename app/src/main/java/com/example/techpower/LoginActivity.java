@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordEditText = findViewById(R.id.editText_password);
 
         SharedPreferences preferences = getSharedPreferences(getString(R.string.app_preferences), MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
         mApiUrl = preferences.getString(getString(R.string.app_api), "");
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
