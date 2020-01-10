@@ -9,6 +9,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -49,7 +52,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mFragmentManager = getSupportFragmentManager();
 
-        // TODO: Show user data on header
+        View header = navigationView.getHeaderView(0);
+        TextView mNameTextView = header.findViewById(R.id.textView_user_name);
+        TextView mEmailTextView = header.findViewById(R.id.textView_user_email);
+        SharedPreferences preferences = getSharedPreferences(getString(R.string.app_preferences), MODE_PRIVATE);
+        mNameTextView.setText(preferences.getString("username", "Guest"));
+        mEmailTextView.setText(preferences.getString("email", "guest@email.com"));
 
         Fragment fragment = new ProductListFragment();
         setTitle("Techpower");
