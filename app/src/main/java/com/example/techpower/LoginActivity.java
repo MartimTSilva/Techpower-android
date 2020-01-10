@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Network;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -23,6 +25,7 @@ import com.bumptech.glide.load.HttpException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,12 +61,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login() {
-        // Make post body
-        Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("username", mUsernameEditText.getText().toString());
-        paramsMap.put("password", mPasswordEditText.getText().toString());
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,  mApiUrl + "/api/users/login", new JSONObject(paramsMap), new Response.Listener<JSONObject>() {
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,  mApiUrl + "/api/users/login", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
@@ -99,7 +99,27 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), R.string.login_incorrect, Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                // Make post body
+                String username = mUsernameEditText.getText().toString();
+                String password = mPasswordEditText.getText().toString();
+                byte[] loginBytes = null;
+
+                try {
+                    loginBytes = (username + ":" + password).getBytes(StandardCharsets.UTF_8);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                String loginBase64 = Base64.encodeToString(loginBytes, Base64.NO_WRAP);
+
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Basic " + loginBase64);
+                return headers;
+            }
+        };
 
         mQueue.add(request);
     }
