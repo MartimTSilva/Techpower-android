@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,6 +53,7 @@ public class ProductListFragment extends Fragment implements ProductListener {
         setHasOptionsMenu(true);
 
         mListViewProducts = view.findViewById(R.id.listView_products);
+        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
 
         // Set on list item click
         mListViewProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -64,12 +66,22 @@ public class ProductListFragment extends Fragment implements ProductListener {
             }
         });
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                SingletonStore.getInstance(getContext()).getAllProductsAPI(getContext(), SingletonStore.isConnectedInternet(getContext()));
+
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         // Set fab click listener
         FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Add intent to open shopping cart activity
+                Intent intent = new Intent(getContext(),CartActivity.class);
+                startActivity(intent);
             }
         });
 

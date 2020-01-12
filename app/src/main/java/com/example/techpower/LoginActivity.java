@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Network;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -23,6 +25,7 @@ import com.bumptech.glide.load.HttpException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,9 +45,10 @@ public class LoginActivity extends AppCompatActivity {
         mQueue = Volley.newRequestQueue(this);
         mLoginButton = findViewById(R.id.button_login);
         mUsernameEditText = findViewById(R.id.editText_username);
-        mPasswordEditText = findViewById(R.id.editText_ApiUrl);
+        mPasswordEditText = findViewById(R.id.editText_password);
 
         SharedPreferences preferences = getSharedPreferences(getString(R.string.app_preferences), MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
         mApiUrl = preferences.getString(getString(R.string.app_api), "");
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
@@ -57,25 +61,32 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login() {
-        // Make post body
-        Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("username", mUsernameEditText.getText().toString());
-        paramsMap.put("password", mPasswordEditText.getText().toString());
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,  mApiUrl + "/api/users/login", new JSONObject(paramsMap), new Response.Listener<JSONObject>() {
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,  mApiUrl + "/api/users/login", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                // Save authkey to shared preferences
-                SharedPreferences preferences = getSharedPreferences(getString(R.string.app_preferences), MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
 
                 try {
-                    editor.putString("authkey", response.getString("auth-key"));
+                    // Save authkey to shared preferences
+                    SharedPreferences preferences = getSharedPreferences(getString(R.string.app_preferences), MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("id", response.getString("id"));
+                    editor.putString("username", response.getString("username"));
+                    editor.putString("authkey", response.getString("auth_key"));
+                    editor.putString("email", response.getString("email"));
+                    editor.putString("firstName", response.getString("firstName"));
+                    editor.putString("lastName", response.getString("lastName"));
+                    editor.putString("phone", response.getString("phone"));
+                    editor.putString("address", response.getString("address"));
+                    editor.putString("nif", response.getString("nif"));
+                    editor.putString("postal_code", response.getString("postal_code"));
+                    editor.putString("city", response.getString("city"));
+                    editor.putString("country", response.getString("country"));
+                    editor.apply();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-                editor.apply();
 
                 finish();
                 Toast.makeText(getApplicationContext(), R.string.login_success, Toast.LENGTH_SHORT).show();
@@ -88,7 +99,27 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), R.string.login_incorrect, Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                // Make post body
+                String username = mUsernameEditText.getText().toString();
+                String password = mPasswordEditText.getText().toString();
+                byte[] loginBytes = null;
+
+                try {
+                    loginBytes = (username + ":" + password).getBytes(StandardCharsets.UTF_8);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                String loginBase64 = Base64.encodeToString(loginBytes, Base64.NO_WRAP);
+
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Basic " + loginBase64);
+                return headers;
+            }
+        };
 
         mQueue.add(request);
     }

@@ -128,7 +128,7 @@ public class StoreDBHelper extends SQLiteOpenHelper {
     public ArrayList<Product> getAllProductsDB() {
         ArrayList<Product> products = new ArrayList<>();
         Cursor cursor = this.database.query(PRODUCT_TABLE_NAME,
-                new String[]{PRODUCT_ID, PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, PRODUCT_IMAGE, PRODUCT_CATEGORY},
+                new String[]{PRODUCT_ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_DESCRIPTION, PRODUCT_IMAGE, PRODUCT_CATEGORY},
                 null, null, null, null, null);
 
         if (cursor.moveToFirst()) {
