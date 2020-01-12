@@ -124,6 +124,10 @@ public class SingletonStore {
         mCart.put(productId, quantity);
     }
 
+    public Map<Integer, Integer> getCart() {
+        return mCart;
+    }
+
     /* API ACCESS */
 
     public void getAllProductsAPI(final Context context, boolean isConnected) {
