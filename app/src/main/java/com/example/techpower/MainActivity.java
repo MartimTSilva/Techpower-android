@@ -1,15 +1,12 @@
 package com.example.techpower;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -23,6 +20,15 @@ import com.example.techpower.utils.Logout;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -70,7 +76,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ArrayList<Category> categoryList = SingletonStore.getInstance(getApplicationContext()).getCategoriesDB();
         Menu categoriesSubMenu = menu.addSubMenu(R.string.nav_categories, Menu.NONE, 0, R.string.nav_categories);
         for (Category category: categoryList) {
-            categoriesSubMenu.add(Menu.NONE, category.getId(), Menu.NONE,category.getName());
+            categoriesSubMenu.add(Menu.NONE, category.getId(), Menu.NONE,category.getName()).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    int category_id = menuItem.getItemId();
+                    SingletonStore.getInstance(getApplicationContext()).getProductsByCategoryAPI(getApplicationContext(),
+                            SingletonStore.isConnectedInternet(getApplicationContext()), category_id);
+                    return false;
+                }
+            });
+
         }
         navigationView.invalidate();
 

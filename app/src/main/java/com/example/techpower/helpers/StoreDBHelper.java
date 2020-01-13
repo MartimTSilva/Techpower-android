@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -147,6 +148,36 @@ public class StoreDBHelper extends SQLiteOpenHelper {
 
         cursor.close();
         return products;
+    }
+
+    public ArrayList<Product> getAllProductsByCategoryDB(int id_category) {
+        //Guarda todas as categorias num array
+        ArrayList<Category> mAllCategories = new ArrayList<>();
+        mAllCategories = getAllCategoriesDB();
+
+        //Procura e guarda num array todas as categorias e sub-categorias com o id_category
+        ArrayList<Category> mCategories = new ArrayList<>();
+        for (Category category: mAllCategories) {
+            if (category.getParent_id() == id_category || category.getId() == id_category){
+                mCategories.add(category);
+            }
+        }
+
+        //Guarda todos os produtos num array
+        ArrayList<Product> mAllProducts = new ArrayList<>();
+        mAllProducts = getAllProductsDB();
+
+        //Procura e guarda num array todos os produtos da categoria e sub-categoria
+        ArrayList<Product> CategoryProducts = new ArrayList<>();
+        //Encontra e guarda os produtos que tenham ou o id da categoria ou o parent_id da categoria
+        for (Category category: mCategories) {
+            for (Product product : mAllProducts) {
+                if (product.getIdCategory() == category.getId()) {
+                    CategoryProducts.add(product);
+                }
+            }
+        }
+        return CategoryProducts;
     }
 
     public void insertProductDB(Product product) {

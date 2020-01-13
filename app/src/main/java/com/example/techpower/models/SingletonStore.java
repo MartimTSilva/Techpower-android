@@ -176,7 +176,18 @@ public class SingletonStore {
         }
     }
 
-    public void signupUserAPI(final User user, final Context context) {
+    public void getProductsByCategoryAPI(final Context context, boolean isConnected, int id_category) {
+        mProductList = mStoreDB.getAllProductsByCategoryDB(id_category);
+
+        if (mProductListener != null) {
+            mProductListener.onRefreshProductList(mProductList);
+        }
+        if (mProductList.isEmpty()) {
+            Toast.makeText(context, "This category doesn't have any products", Toast.LENGTH_SHORT).show();
+        }
+    }
+    
+    public void signupUserAPI(final User user, final Context context){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, mApiUrl + "/api/users",
                 new Response.Listener<String>() {
                     @Override
