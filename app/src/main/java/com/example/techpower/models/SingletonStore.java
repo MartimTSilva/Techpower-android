@@ -27,6 +27,7 @@ import com.example.techpower.SignUpActivity;
 import com.example.techpower.helpers.StoreDBHelper;
 import com.example.techpower.listeners.ProductListener;
 import com.example.techpower.utils.CategoryJsonParser;
+import com.example.techpower.utils.Client;
 import com.example.techpower.utils.ProductJsonParser;
 
 import org.json.JSONArray;
@@ -242,11 +243,11 @@ public class SingletonStore {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("isSuccess");
-
                             if (success.equals("201")) {
+                                //Updates shared preferences
+                                Client.clientUpdate(context, user);
                                 Toast.makeText(context, R.string.update_success, Toast.LENGTH_LONG).show();
                             }
-
                         } catch (Exception e) {
                             e.printStackTrace();
                             Toast.makeText(context, R.string.update_error, Toast.LENGTH_LONG).show();

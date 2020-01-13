@@ -22,7 +22,7 @@
 
     <!-- Login -->
     <string name="btn_login">Login</string>
-    <string name="login_success">Welcome</string>
+    <string name="login_success">Welcome </string>
     <string name="login_incorrect">Username or password incorrect</string>
 
     <!-- Sign Up -->
@@ -59,15 +59,17 @@
     <string name="add_cart">Product added to cart</string>
 
     <!-- Form Error Messages -->
-    <string name="error_field_required">This field is required</string>
-    <string name="error_invalid_tooShort">too short</string>
-    <string name="error_invalid_tooLong">too long</string>
+    <string name="error_field_required">Data incorrect</string>
+    <string name="error_password_not_match">Passwords don\'t match</string>
+    <string name="error_invalid_tooShort">Too short</string>
+    <!--<string name="error_invalid_tooLong">too long</string>
     <string name="error_invalid_username">This username is invalid</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">Password too short or does not match</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_invalid_phone">Phone number must have 9 digits</string>
-    <string name="error_invalid_nif">NIF  must have 9 digits</string>
+    <string name="error_invalid_nif">NIF  must have 9 digits</string>-->
+
     <string name="btn_PlaceOrder">Place Order</string>
     <string name="tv_ShippingAdress">SHIPPING ADDRESS</string>
     <string name="tv_items">ITEMS</string>
