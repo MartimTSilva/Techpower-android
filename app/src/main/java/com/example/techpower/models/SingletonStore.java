@@ -140,7 +140,7 @@ public class SingletonStore {
             JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mApiUrl + "/api/products", null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    mProductList = ProductJsonParser.parserJsonProducts(response, context);
+                    mProductList = ProductJsonParser.parserJsonProducts(response, context, mApiUrl);
                     insertProductsDB(mProductList);
                     if (mProductListener != null) {
                         mProductListener.onRefreshProductList(mProductList);

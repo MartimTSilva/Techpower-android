@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class ProductJsonParser {
 
-    public static ArrayList<Product> parserJsonProducts (JSONArray response, Context context) {
+    public static ArrayList<Product> parserJsonProducts (JSONArray response, Context context, String apiUrl) {
         ArrayList<Product> productList = new ArrayList<>();
         try {
             for (int i = 0; i < response.length(); i++) {
@@ -24,7 +24,7 @@ public class ProductJsonParser {
                 String name = product.getString("product_name");
                 float price = (float) product.getDouble("unit_price");
                 String description = product.getString("description");
-                String image = product.getString("product_image");
+                String image = apiUrl + "/api/images?name=" + product.getString("product_image");
                 int idCategory = product.getInt("id_category");
 
                 Product auxProduct = new Product(id, name, price, description, image, idCategory);

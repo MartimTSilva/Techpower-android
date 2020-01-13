@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,6 +53,7 @@ public class ProductListFragment extends Fragment implements ProductListener {
         setHasOptionsMenu(true);
 
         mListViewProducts = view.findViewById(R.id.listView_products);
+        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
 
         // Set on list item click
         mListViewProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,6 +63,15 @@ public class ProductListFragment extends Fragment implements ProductListener {
                 Intent product_intent = new Intent(getActivity(), ProductDetailsActivity.class);
                 product_intent.putExtra("ID", product.getId());
                 startActivity(product_intent);
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                SingletonStore.getInstance(getContext()).getAllProductsAPI(getContext(), SingletonStore.isConnectedInternet(getContext()));
+
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
