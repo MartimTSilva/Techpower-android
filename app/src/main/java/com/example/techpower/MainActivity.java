@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -16,7 +14,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.techpower.models.Category;
 import com.example.techpower.models.SingletonStore;
-import com.example.techpower.utils.Logout;
+import com.example.techpower.utils.Client;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -24,11 +22,6 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -117,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.string.nav_logout:
-                Logout.clientLogout(getApplicationContext());
+                Client.clientLogout(getApplicationContext());
                 Intent intent = getIntent();
                 finish();
                 startActivity(intent);
