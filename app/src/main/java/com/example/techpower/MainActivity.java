@@ -1,9 +1,5 @@
 package com.example.techpower;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,10 +16,14 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.techpower.models.Category;
 import com.example.techpower.models.SingletonStore;
-import com.example.techpower.utils.Logout;
+import com.example.techpower.models.User;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -76,7 +76,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ArrayList<Category> categoryList = SingletonStore.getInstance(getApplicationContext()).getCategoriesDB();
         Menu categoriesSubMenu = menu.addSubMenu(R.string.nav_categories, Menu.NONE, 0, R.string.nav_categories);
         for (Category category: categoryList) {
-            categoriesSubMenu.add(Menu.NONE, category.getId(), Menu.NONE,category.getName());
+            categoriesSubMenu.add(Menu.NONE, category.getId(), Menu.NONE,category.getName()).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    int category_id = menuItem.getItemId();
+                    SingletonStore.getInstance(getApplicationContext()).getProductsByCategoryAPI(getApplicationContext(),
+                            SingletonStore.isConnectedInternet(getApplicationContext()), category_id);
+                    return false;
+                }
+            });
+
         }
         navigationView.invalidate();
 
@@ -87,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             accountSubMenu.add(Menu.NONE, R.string.nav_login, Menu.NONE, R.string.nav_login);
             accountSubMenu.add(Menu.NONE, R.string.nav_signup, Menu.NONE, R.string.nav_signup);
         } else {
+            accountSubMenu.add(Menu.NONE, R.string.nav_userPage, Menu.NONE, R.string.nav_userPage);
             accountSubMenu.add(Menu.NONE, R.string.nav_logout, Menu.NONE, R.string.nav_logout);
         }
         navigationView.invalidate();
@@ -107,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.string.nav_logout:
-                Logout.clientLogout(getApplicationContext());
+                User.deleteUser(getApplicationContext());
                 Intent intent = getIntent();
                 finish();
                 startActivity(intent);
@@ -116,6 +126,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_settings:
                 Intent settings_intent = new Intent(this, SettingsActivity.class);
                 startActivity(settings_intent);
+                break;
+
+            case R.string.nav_userPage:
+                Intent userPage_intent = new Intent(this, UserActivity.class);
+                startActivity(userPage_intent);
                 break;
         }
 

@@ -4,6 +4,7 @@
     <string name="app_api"></string>
     <string name="nav_login">Login</string>
     <string name="nav_settings">Settings</string>
+    <string name="nav_userPage">User Page</string>
     <string name="navigation_drawer_open">open</string>
     <string name="navigation_drawer_close">close</string>
     <string name="nav_item_search">Search</string>
@@ -21,7 +22,7 @@
 
     <!-- Login -->
     <string name="btn_login">Login</string>
-    <string name="login_success">Welcome</string>
+    <string name="login_success">Welcome </string>
     <string name="login_incorrect">Username or password incorrect</string>
 
     <!-- Sign Up -->
@@ -43,20 +44,32 @@
     <string name="signup_success">Account Created Successfully!</string>
     <string name="signup_error">ERROR!\nUsername, E-mail or NIF Already in use.</string>
 
+    <!-- User Page -->
+    <string name="update_success">User data updated successfully!</string>
+    <string name="update_error">There was an error updating user data</string>
+    <string name="delete_success">User deleted successfully!</string>
+    <string name="btn_update">UPDATE</string>
+    <string name="btn_delete">DELETE ACCOUNT</string>
+    <string name="user_delete_alert_cancel">Cancel</string>
+    <string name="user_delete_alert_ok">Delete Account</string>
+    <string name="user_delete_alert_dialog">Are you sure you want to delete your account?</string>
+
     <!-- Product Details -->
     <string name="details_btn_addToCart">Add to Cart</string>
     <string name="add_cart">Product added to cart</string>
 
     <!-- Form Error Messages -->
-    <string name="error_field_required">This field is required</string>
-    <string name="error_invalid_tooShort">too short</string>
-    <string name="error_invalid_tooLong">too long</string>
+    <string name="error_field_required">Data incorrect</string>
+    <string name="error_password_not_match">Passwords don\'t match</string>
+    <string name="error_invalid_tooShort">Too short</string>
+    <!--<string name="error_invalid_tooLong">too long</string>
     <string name="error_invalid_username">This username is invalid</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">Password too short or does not match</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_invalid_phone">Phone number must have 9 digits</string>
-    <string name="error_invalid_nif">NIF  must have 9 digits</string>
+    <string name="error_invalid_nif">NIF  must have 9 digits</string>-->
+
     <string name="btn_PlaceOrder">Place Order</string>
     <string name="tv_ShippingAdress">SHIPPING ADDRESS</string>
     <string name="tv_items">ITEMS</string>

@@ -34,7 +34,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_details);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tv_productName = findViewById(R.id.textView_productName);
         img_productImage = findViewById(R.id.imageView_productImage);
