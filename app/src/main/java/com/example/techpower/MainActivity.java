@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -118,9 +119,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.string.nav_logout:
                 User.deleteUser(getApplicationContext());
-                Intent intent = getIntent();
                 finish();
-                startActivity(intent);
+                startActivity(getIntent());
+                Toast.makeText(getApplicationContext(), "You've been logged out", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_settings:
