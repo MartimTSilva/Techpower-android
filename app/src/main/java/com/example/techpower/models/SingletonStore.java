@@ -1,14 +1,10 @@
 package com.example.techpower.models;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Base64;
 import android.util.Log;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -16,22 +12,17 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.techpower.MainActivity;
 import com.example.techpower.R;
-import com.example.techpower.SignUpActivity;
 import com.example.techpower.helpers.StoreDBHelper;
 import com.example.techpower.listeners.ProductListener;
 import com.example.techpower.utils.CategoryJsonParser;
-import com.example.techpower.utils.Client;
 import com.example.techpower.utils.ProductJsonParser;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -235,19 +226,30 @@ public class SingletonStore {
     }
 
     public void updateUserAPI(final User user, final Context context, final String authentication_key, String user_id) {
-        StringRequest stringRequest = new StringRequest(Request.Method.PUT, mApiUrl + "/api/users/" + user_id
-                + "?access-token=" + authentication_key,
-                new Response.Listener<String>() {
+        Map<String, String> params = new HashMap<>();
+        params.put("username", user.getUsername());
+        params.put("email", user.getEmail());
+        params.put("firstName", user.getFirstName());
+        params.put("lastName", user.getLastName());
+        params.put("phone", user.getPhone());
+        params.put("address", user.getAddress());
+        params.put("nif", user.getNif());
+        params.put("postal_code", user.getPostalCode());
+        params.put("city", user.getCity());
+        params.put("country", user.getCountry());
+
+        JSONObject object = new JSONObject(params);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, mApiUrl + "/api/users/" + user_id
+                + "?access-token=" + authentication_key, object,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(JSONObject response) {
                         try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("isSuccess");
-                            if (success.equals("201")) {
-                                //Updates shared preferences
-                                Client.clientUpdate(context, user);
-                                Toast.makeText(context, R.string.update_success, Toast.LENGTH_LONG).show();
-                            }
+                            //Updates shared preferences
+                            SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.app_preferences), Context.MODE_PRIVATE);
+                            User.saveUser(context, response, preferences);
+                            Toast.makeText(context, R.string.update_success, Toast.LENGTH_LONG).show();
                         } catch (Exception e) {
                             e.printStackTrace();
                             Toast.makeText(context, R.string.update_error, Toast.LENGTH_LONG).show();
@@ -258,26 +260,11 @@ public class SingletonStore {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(context, "Update Error: " + error.toString(), Toast.LENGTH_LONG).show();
+                        Log.e("Techpower", "Update Error: " + error.toString());
                     }
                 }
-        ) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", user.getUsername());
-                params.put("email", user.getEmail());
-                params.put("firstName", user.getFirstName());
-                params.put("lastName", user.getLastName());
-                params.put("phone", user.getPhone());
-                params.put("address", user.getAddress());
-                params.put("nif", user.getNif());
-                params.put("postal_code", user.getPostalCode());
-                params.put("city", user.getCity());
-                params.put("country", user.getCountry());
-                return params;
-            }
-        };
-        sVolleyQueue.add(stringRequest);
+        );
+        sVolleyQueue.add(request);
     }
 
     public void deleteUserAPI(final Context context, final String authentication_key, String user_id) {

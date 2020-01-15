@@ -14,7 +14,6 @@ import android.widget.EditText;
 
 import com.example.techpower.models.SingletonStore;
 import com.example.techpower.models.User;
-import com.example.techpower.utils.Client;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -78,7 +77,6 @@ public class UserActivity extends AppCompatActivity {
                     SingletonStore.getInstance(getApplicationContext()).updateUserAPI(updateUser() ,getApplicationContext(),
                             authentication_key, user_id);
                 }
-                //TODO: Se o user alterar o username, fazer logout automaticamente
             }
         });
 
@@ -91,7 +89,7 @@ public class UserActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 SingletonStore.getInstance(getApplicationContext()).deleteUserAPI(getApplicationContext(),authentication_key, user_id);
-                                Client.clientLogout(getApplicationContext());
+                                User.deleteUser(getApplicationContext());
                                 finish();
                             }
                         }).setNegativeButton(R.string.user_delete_alert_cancel, null);
@@ -116,61 +114,61 @@ public class UserActivity extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
-        if (!Client.checkUsername(username)) {
+        if (!User.checkUsername(username)) {
             mUsername.setError(getString(R.string.error_field_required));
             focusView = mUsername;
             cancel = true;
         }
 
-        if (!Client.checkEmail(email)) {
+        if (!User.checkEmail(email)) {
             mEmail.setError(getString(R.string.error_field_required));
             focusView = mEmail;
             cancel = true;
         }
 
-        if (!Client.checkFirstName(firstName)) {
+        if (!User.checkFirstName(firstName)) {
             mFirstName.setError(getString(R.string.error_field_required));
             focusView = mFirstName;
             cancel = true;
         }
 
-        if (!Client.checkLastName(lastName)) {
+        if (!User.checkLastName(lastName)) {
             mLastName.setError(getString(R.string.error_field_required));
             focusView = mLastName;
             cancel = true;
         }
 
-        if (!Client.checkAddress(address)) {
+        if (!User.checkAddress(address)) {
             mAddress.setError(getString(R.string.error_field_required));
             focusView = mAddress;
             cancel = true;
         }
 
-        if (!Client.checkCity(city)) {
+        if (!User.checkCity(city)) {
             mCity.setError(getString(R.string.error_field_required));
             focusView = mCity;
             cancel = true;
         }
 
-        if (!Client.checkCountry(country)) {
+        if (!User.checkCountry(country)) {
             mCountry.setError(getString(R.string.error_field_required));
             focusView = mCountry;
             cancel = true;
         }
 
-        if (!Client.checkPostalCode(postal_code)) {
+        if (!User.checkPostalCode(postal_code)) {
             mPostalCode.setError(getString(R.string.error_field_required));
             focusView = mPostalCode;
             cancel = true;
         }
 
-        if (!Client.checkPhone(phone)) {
+        if (!User.checkPhone(phone)) {
             mPhone.setError(getString(R.string.error_field_required));
             focusView = mPhone;
             cancel = true;
         }
 
-        if (!Client.checkNif(nif)) {
+        if (!User.checkNif(nif)) {
             mNif.setError(getString(R.string.error_field_required));
             focusView = mNif;
             cancel = true;

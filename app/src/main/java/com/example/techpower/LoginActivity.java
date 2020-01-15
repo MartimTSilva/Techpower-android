@@ -21,7 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.techpower.utils.Client;
+import com.example.techpower.models.User;
 
 import org.json.JSONObject;
 
@@ -68,9 +68,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 //Saves data in the shared preferences
                 SharedPreferences preferences = getSharedPreferences(getString(R.string.app_preferences), Context.MODE_PRIVATE);
-                Client.clientLogin(getApplicationContext(), response, preferences);
+                User.saveUser(getApplicationContext(), response, preferences);
                 finish();
-                Toast.makeText(getApplicationContext(), R.string.login_success + preferences.getString("username", null), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.login_success, Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override

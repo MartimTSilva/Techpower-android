@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.techpower.models.Category;
 import com.example.techpower.models.SingletonStore;
-import com.example.techpower.utils.Client;
+import com.example.techpower.models.User;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.string.nav_logout:
-                Client.clientLogout(getApplicationContext());
+                User.deleteUser(getApplicationContext());
                 Intent intent = getIntent();
                 finish();
                 startActivity(intent);
