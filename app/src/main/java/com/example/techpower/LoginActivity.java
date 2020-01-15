@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse response = error.networkResponse;
-                if (response.statusCode == 406) {
+                if (response.statusCode == 401) {
                     Toast.makeText(getApplicationContext(), R.string.login_incorrect, Toast.LENGTH_SHORT).show();
                 }
             }
