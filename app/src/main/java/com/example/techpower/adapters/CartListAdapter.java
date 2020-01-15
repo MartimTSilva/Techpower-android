@@ -1,6 +1,7 @@
 package com.example.techpower.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.techpower.R;
+import com.example.techpower.models.CartItem;
 import com.example.techpower.models.Product;
 import com.example.techpower.models.SingletonStore;
 
@@ -21,13 +23,11 @@ public class CartListAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private Map<Integer, Integer> mCartArrayList;
-    private ArrayList<Product> mProductArrayList;
+    private ArrayList<CartItem> mCartArrayList;
 
-    public CartListAdapter(Context Context, Map<Integer, Integer> CartArrayList) {
+    public CartListAdapter(Context Context, ArrayList<CartItem> CartArrayList) {
         mContext = Context;
         mCartArrayList = CartArrayList;
-
     }
 
     @Override
@@ -51,7 +51,11 @@ public class CartListAdapter extends BaseAdapter {
             mLayoutInflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
         }
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.cart_item, parent, false);
+            try {
+                convertView = mLayoutInflater.inflate(R.layout.cart_item, null);
+            } catch (Exception ex) {
+                Log.e("Techpower", "getView: ", ex.fillInStackTrace());
+            }
         }
 
         ViewHolderList viewHolder = (ViewHolderList) convertView.getTag();
@@ -66,7 +70,6 @@ public class CartListAdapter extends BaseAdapter {
 
     private class ViewHolderList
     {
-
         private TextView mTextViewProductName;
         private TextView mTextViewProductPrice;
         private TextView mTextViewProductQuantity;
@@ -74,31 +77,28 @@ public class CartListAdapter extends BaseAdapter {
 
         public ViewHolderList(View view)
         {
-            mTextViewProductName = view.findViewById(R.id.textView_productName);
-            mTextViewProductPrice = view.findViewById(R.id.textView_productPrice);
+            mTextViewProductName = view.findViewById(R.id.textView_name);
+            mTextViewProductPrice = view.findViewById(R.id.textView_price);
             mTextViewProductQuantity = view.findViewById(R.id.textView_quantity);
-            mImageViewProductImage = view.findViewById(R.id.textView_productName);
+            mImageViewProductImage = view.findViewById(R.id.imageView_Product);
         }
 
         public void update(int position)
         {
             //Add product info to card
-            //for (int i = 0; i >= mCartArrayList.size(); i++)
-            for (Map.Entry<Integer, Integer> entry: mCartArrayList.entrySet())
-            {
-                Product product = SingletonStore.getInstance(mContext).getProduct(entry.getKey());
-                mTextViewProductName.setText(product.getName());
-                mTextViewProductPrice.setText(product.getPrice() + "€");
-                mTextViewProductQuantity.setText(entry.getValue());
+            CartItem item = SingletonStore.getInstance(mContext).getCartItem(position);
+            Product product = SingletonStore.getInstance(mContext).getProduct(item.getId());
+            mTextViewProductName.setText(product.getName());
+            mTextViewProductPrice.setText(product.getPrice() + "€");
+            mTextViewProductQuantity.setText(String.valueOf(item.getQuantity()));
 
-                // Add image to image view on card
-                Glide.with(mContext)
-                        .load(product.getImage())
-                        .placeholder(R.drawable.no_image)
-                        .thumbnail(0f)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(mImageViewProductImage);
-            }
+            // Add image to image view on card
+            Glide.with(mContext)
+                    .load(product.getImage())
+                    .placeholder(R.drawable.no_image)
+                    .thumbnail(0f)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(mImageViewProductImage);
         }
     }
 }

@@ -32,7 +32,7 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        lv_Products = findViewById(R.id.listView_products);
+        lv_Products = findViewById(R.id.listCartProducts);
         tv_total = findViewById(R.id.textView_Total);
         btn_checkout = findViewById(R.id.button_Checkout);
 

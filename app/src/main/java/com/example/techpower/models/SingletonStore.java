@@ -4,17 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.techpower.R;
 import com.example.techpower.helpers.StoreDBHelper;
@@ -23,11 +19,8 @@ import com.example.techpower.utils.CategoryJsonParser;
 import com.example.techpower.utils.ProductJsonParser;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SingletonStore {
 
@@ -40,7 +33,7 @@ public class SingletonStore {
     private ArrayList<Category> mCategoryList;
     private StoreDBHelper mStoreDB;
     private ProductListener mProductListener;
-    private Map<Integer, Integer> mCart;
+    private ArrayList<CartItem> mCart;
 
     private SingletonStore(Context context) {
         sContext = context;
@@ -48,7 +41,7 @@ public class SingletonStore {
         mProductList = new ArrayList<>();
         mCategoryList = new ArrayList<>();
         mStoreDB = new StoreDBHelper(context);
-        mCart = new HashMap<>();
+        mCart = new ArrayList<>();
     }
 
     public static synchronized SingletonStore getInstance(Context context) {
@@ -130,11 +123,16 @@ public class SingletonStore {
     /* CRUD CART */
 
     public void addProductCart(int productId, int quantity) {
-        mCart.put(productId, quantity);
+        CartItem item = new CartItem(productId, quantity);
+        mCart.add(item);
     }
 
-    public Map<Integer, Integer> getCart() {
+    public ArrayList<CartItem> getCart() {
         return mCart;
+    }
+
+    public CartItem getCartItem(int pos) {
+        return mCart.get(pos);
     }
 
     /* API ACCESS */
