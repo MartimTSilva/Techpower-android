@@ -4,16 +4,29 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.techpower.models.SingletonStore;
 import com.example.techpower.models.User;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -74,8 +87,7 @@ public class UserActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //If there's no form errors, updates the user in the shared preferences and API
                 if (updateUser() != null){
-                    SingletonStore.getInstance(getApplicationContext()).updateUserAPI(updateUser() ,getApplicationContext(),
-                            authentication_key, user_id);
+                    updateUserAPI(updateUser() ,getApplicationContext(), authentication_key, user_id);
                 }
             }
         });
@@ -88,7 +100,7 @@ public class UserActivity extends AppCompatActivity {
                         .setPositiveButton(R.string.user_delete_alert_ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                SingletonStore.getInstance(getApplicationContext()).deleteUserAPI(getApplicationContext(),authentication_key, user_id);
+                                deleteUserAPI(getApplicationContext(),authentication_key, user_id);
                                 User.deleteUser(getApplicationContext());
                                 finish();
                             }
@@ -181,6 +193,70 @@ public class UserActivity extends AppCompatActivity {
         } else {
             return new User(username, email, null, firstName, lastName, phone, address, nif, postal_code, city, country);
         }
+    }
+
+    private void updateUserAPI(final User user, final Context context, final String authentication_key, String user_id) {
+        Map<String, String> params = new HashMap<>();
+        params.put("username", user.getUsername());
+        params.put("email", user.getEmail());
+        params.put("firstName", user.getFirstName());
+        params.put("lastName", user.getLastName());
+        params.put("phone", user.getPhone());
+        params.put("address", user.getAddress());
+        params.put("nif", user.getNif());
+        params.put("postal_code", user.getPostalCode());
+        params.put("city", user.getCity());
+        params.put("country", user.getCountry());
+
+        JSONObject object = new JSONObject(params);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, SingletonStore.getInstance(this).getApiUrl() + "/api/users/" + user_id
+                + "?access-token=" + authentication_key, object,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            //Updates shared preferences
+                            SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.app_preferences), Context.MODE_PRIVATE);
+                            User.saveUser(response, preferences);
+                            Toast.makeText(context, R.string.update_success, Toast.LENGTH_LONG).show();
+                            finish();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(context, R.string.update_error, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, "Update Error: " + error.toString(), Toast.LENGTH_LONG).show();
+                        Log.e("Techpower", "Update Error: " + error.toString());
+                    }
+                }
+        );
+        SingletonStore.getInstance(this).addToRequestQueue(request);
+    }
+
+    private void deleteUserAPI(final Context context, final String authentication_key, String user_id) {
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, SingletonStore.getInstance(this).getApiUrl() + "/api/users/" + user_id +
+                "?access-token=" + authentication_key,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(context, R.string.delete_success, Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, "Delete Error: " + error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ) {
+
+        };
+        SingletonStore.getInstance(this).addToRequestQueue(stringRequest);
     }
 
     @Override

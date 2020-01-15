@@ -16,11 +16,10 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.techpower.models.SingletonStore;
 import com.example.techpower.models.User;
 
 import org.json.JSONObject;
@@ -31,7 +30,6 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private RequestQueue mQueue;
     private String mApiUrl;
     Button mLoginButton;
     EditText mUsernameEditText;
@@ -44,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mQueue = Volley.newRequestQueue(this);
         mLoginButton = findViewById(R.id.button_login);
         mUsernameEditText = findViewById(R.id.editText_username);
         mPasswordEditText = findViewById(R.id.editText_password);
@@ -68,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 //Saves data in the shared preferences
                 SharedPreferences preferences = getSharedPreferences(getString(R.string.app_preferences), Context.MODE_PRIVATE);
-                User.saveUser(getApplicationContext(), response, preferences);
+                User.saveUser(response, preferences);
                 finish();
                 Toast.makeText(getApplicationContext(), R.string.login_success, Toast.LENGTH_SHORT).show();
             }
@@ -101,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                 return headers;
             }
         };
-        mQueue.add(request);
+        SingletonStore.getInstance(this).addToRequestQueue(request);
     }
 
     @Override

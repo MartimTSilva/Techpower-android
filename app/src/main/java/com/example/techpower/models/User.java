@@ -123,7 +123,7 @@ public class User {
         this.country = country;
     }
 
-    public static void saveUser(Context context, JSONObject response, SharedPreferences preferences){
+    public static void saveUser(JSONObject response, SharedPreferences preferences){
         try {
             // Saves authkey and user information in the shared preferences
             SharedPreferences.Editor editor = preferences.edit();

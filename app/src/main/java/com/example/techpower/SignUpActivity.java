@@ -4,14 +4,25 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.techpower.models.SingletonStore;
 import com.example.techpower.models.User;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -55,7 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //If there's no form errors, sign ups the user with the API
                 if (attemptRegistration() != null){
-                    SingletonStore.getInstance(getApplicationContext()).signupUserAPI(attemptRegistration(), getApplicationContext());
+                    signupUserAPI(attemptRegistration(), getApplicationContext());
                     setResult(Activity.RESULT_OK);
                     finish();
                 }
@@ -168,6 +179,52 @@ public class SignUpActivity extends AppCompatActivity {
         } else {
             return new User(username, email, password, firstName, lastName, phone, address, nif, postal_code, city, country);
         }
+    }
+
+    public void signupUserAPI(final User user, final Context context){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, SingletonStore.getInstance(this).getApiUrl() + "/api/users",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("isSuccess");
+
+                            if (success.equals("201")) {
+                                Toast.makeText(context, R.string.signup_success, Toast.LENGTH_LONG).show();
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(context, R.string.signup_error, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, "Register Error: " + error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("username", user.getUsername());
+                params.put("email", user.getEmail());
+                params.put("password", user.getPassword());
+                params.put("firstName", user.getFirstName());
+                params.put("lastName", user.getLastName());
+                params.put("phone", user.getPhone());
+                params.put("nif", user.getNif());
+                params.put("address", user.getAddress());
+                params.put("postal_code", user.getPostalCode());
+                params.put("city", user.getCity());
+                params.put("country", user.getCountry());
+                return params;
+            }
+        };
+        SingletonStore.getInstance(this).addToRequestQueue(stringRequest);
     }
 
     @Override

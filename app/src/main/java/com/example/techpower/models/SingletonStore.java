@@ -32,33 +32,55 @@ import java.util.Map;
 public class SingletonStore {
 
     private static SingletonStore instance = null;
-    private static RequestQueue sVolleyQueue;
+    private static String sApiUrl;
+    private static Context sContext;
 
-    private static String mApiUrl;
-
+    private RequestQueue mRequestQueue;
     private ArrayList<Product> mProductList;
     private ArrayList<Category> mCategoryList;
     private StoreDBHelper mStoreDB;
     private ProductListener mProductListener;
     private Map<Integer, Integer> mCart;
 
+    private SingletonStore(Context context) {
+        sContext = context;
+        mRequestQueue = getRequestQueue();
+        mProductList = new ArrayList<>();
+        mCategoryList = new ArrayList<>();
+        mStoreDB = new StoreDBHelper(context);
+        mCart = new HashMap<>();
+    }
+
     public static synchronized SingletonStore getInstance(Context context) {
         if (instance == null) {
             instance = new SingletonStore(context);
         }
         SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.app_preferences), context.MODE_PRIVATE);
-        mApiUrl = preferences.getString(context.getString(R.string.app_api), "");
-
-        sVolleyQueue = Volley.newRequestQueue(context);
+        sApiUrl = preferences.getString(context.getString(R.string.app_api), "");
 
         return instance;
     }
 
-    private SingletonStore(Context context) {
-        mProductList = new ArrayList<>();
-        mCategoryList = new ArrayList<>();
-        mStoreDB = new StoreDBHelper(context);
-        mCart = new HashMap<>();
+    public RequestQueue getRequestQueue() {
+        if (mRequestQueue == null) {
+            mRequestQueue = Volley.newRequestQueue(sContext.getApplicationContext());
+        }
+        return mRequestQueue;
+    }
+
+    public <T> void addToRequestQueue(Request<T> request) {
+        getRequestQueue().add(request);
+    }
+
+    public String getApiUrl() {
+        return sApiUrl;
+    }
+
+    public static boolean isConnectedInternet(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+
+        return networkInfo != null && networkInfo.isConnected();
     }
 
     public void setProductListener(ProductListener productListener) {
@@ -105,13 +127,6 @@ public class SingletonStore {
         return mStoreDB.getAllCategoriesDB();
     }
 
-    public static boolean isConnectedInternet(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-
-        return networkInfo != null && networkInfo.isConnected();
-    }
-
     /* CRUD CART */
 
     public void addProductCart(int productId, int quantity) {
@@ -129,10 +144,10 @@ public class SingletonStore {
                 mProductListener.onRefreshProductList(mProductList);
             }
         } else {
-            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mApiUrl + "/api/products", null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, sApiUrl + "/api/products", null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    mProductList = ProductJsonParser.parserJsonProducts(response, context, mApiUrl);
+                    mProductList = ProductJsonParser.parserJsonProducts(response, context, sApiUrl);
                     insertProductsDB(mProductList);
                     if (mProductListener != null) {
                         mProductListener.onRefreshProductList(mProductList);
@@ -144,7 +159,7 @@ public class SingletonStore {
                     Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
-            sVolleyQueue.add(request);
+            addToRequestQueue(request);
         }
     }
 
@@ -152,7 +167,7 @@ public class SingletonStore {
         if (!isConnected) {
             Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
         } else {
-            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mApiUrl + "/api/categories", null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, sApiUrl + "/api/categories", null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     mCategoryList = CategoryJsonParser.parserJsonCategories(response, context);
@@ -164,7 +179,7 @@ public class SingletonStore {
                     Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
-            sVolleyQueue.add(request);
+            addToRequestQueue(request);
         }
     }
 
@@ -177,114 +192,5 @@ public class SingletonStore {
         if (mProductList.isEmpty()) {
             Toast.makeText(context, "This category doesn't have any products", Toast.LENGTH_SHORT).show();
         }
-    }
-    
-    public void signupUserAPI(final User user, final Context context){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, mApiUrl + "/api/users",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("isSuccess");
-
-                            if (success.equals("201")) {
-                                Toast.makeText(context, R.string.signup_success, Toast.LENGTH_LONG).show();
-                            }
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Toast.makeText(context, R.string.signup_error, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, "Register Error: " + error.toString(), Toast.LENGTH_LONG).show();
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", user.getUsername());
-                params.put("email", user.getEmail());
-                params.put("password", user.getPassword());
-                params.put("firstName", user.getFirstName());
-                params.put("lastName", user.getLastName());
-                params.put("phone", user.getPhone());
-                params.put("nif", user.getNif());
-                params.put("address", user.getAddress());
-                params.put("postal_code", user.getPostalCode());
-                params.put("city", user.getCity());
-                params.put("country", user.getCountry());
-                return params;
-            }
-        };
-        sVolleyQueue.add(stringRequest);
-    }
-
-    public void updateUserAPI(final User user, final Context context, final String authentication_key, String user_id) {
-        Map<String, String> params = new HashMap<>();
-        params.put("username", user.getUsername());
-        params.put("email", user.getEmail());
-        params.put("firstName", user.getFirstName());
-        params.put("lastName", user.getLastName());
-        params.put("phone", user.getPhone());
-        params.put("address", user.getAddress());
-        params.put("nif", user.getNif());
-        params.put("postal_code", user.getPostalCode());
-        params.put("city", user.getCity());
-        params.put("country", user.getCountry());
-
-        JSONObject object = new JSONObject(params);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, mApiUrl + "/api/users/" + user_id
-                + "?access-token=" + authentication_key, object,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            //Updates shared preferences
-                            SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.app_preferences), Context.MODE_PRIVATE);
-                            User.saveUser(context, response, preferences);
-                            Toast.makeText(context, R.string.update_success, Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Toast.makeText(context, R.string.update_error, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, "Update Error: " + error.toString(), Toast.LENGTH_LONG).show();
-                        Log.e("Techpower", "Update Error: " + error.toString());
-                    }
-                }
-        );
-        sVolleyQueue.add(request);
-    }
-
-    public void deleteUserAPI(final Context context, final String authentication_key, String user_id) {
-        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, mApiUrl + "/api/users/" + user_id +
-                "?access-token=" + authentication_key,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText(context, R.string.delete_success, Toast.LENGTH_LONG).show();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, "Delete Error: " + error.toString(), Toast.LENGTH_LONG).show();
-                    }
-                }
-        ) {
-
-        };
-        sVolleyQueue.add(stringRequest);
     }
 }
