@@ -76,7 +76,7 @@ public class ProductListAdapter extends BaseAdapter {
             // Add product info to card
             Product product = mProductArrayList.get(position);
             mTextViewProductName.setText(product.getName());
-            mTextViewProductPrice.setText(product.getPrice() + "");
+            mTextViewProductPrice.setText(product.getPrice() + "€");
 
             // Add image to image view on card
             Glide.with(mContext)

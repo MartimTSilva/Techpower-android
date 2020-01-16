@@ -127,6 +127,11 @@ public class SingletonStore {
         mCart.add(item);
     }
 
+    public void removeProductCart(int id) {
+        CartItem item = mCart.get(id);
+        mCart.remove(item);
+    }
+
     public ArrayList<CartItem> getCart() {
         return mCart;
     }
@@ -134,6 +139,17 @@ public class SingletonStore {
     public CartItem getCartItem(int pos) {
         return mCart.get(pos);
     }
+
+    public float getCartTotal() {
+        float total = 0;
+        for(int i = 0; i < mCart.size(); i++) {
+            CartItem item = SingletonStore.getInstance(sContext).getCartItem(i);
+            Product product = SingletonStore.getInstance(sContext).getProduct(item.getId());
+            total = (product.getPrice()* item.getQuantity()) + total;
+        }
+        return total;
+    }
+
 
     /* API ACCESS */
 

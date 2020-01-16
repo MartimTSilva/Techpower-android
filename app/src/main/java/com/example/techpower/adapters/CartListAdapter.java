@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -74,6 +76,9 @@ public class CartListAdapter extends BaseAdapter {
         private TextView mTextViewProductPrice;
         private TextView mTextViewProductQuantity;
         private ImageView mImageViewProductImage;
+        private Button mButtonPlus;
+        private Button mButtonMinus;
+        private ImageButton mButtonRemove;
 
         public ViewHolderList(View view)
         {
@@ -81,12 +86,15 @@ public class CartListAdapter extends BaseAdapter {
             mTextViewProductPrice = view.findViewById(R.id.textView_price);
             mTextViewProductQuantity = view.findViewById(R.id.textView_quantity);
             mImageViewProductImage = view.findViewById(R.id.imageView_Product);
+            mButtonPlus = view.findViewById(R.id.button_plus);
+            mButtonMinus = view.findViewById(R.id.button_minus);
+            mButtonRemove = view.findViewById(R.id.imageButton_delete);
         }
 
-        public void update(int position)
+        public void update(final int position)
         {
             //Add product info to card
-            CartItem item = SingletonStore.getInstance(mContext).getCartItem(position);
+            final CartItem item = SingletonStore.getInstance(mContext).getCartItem(position);
             Product product = SingletonStore.getInstance(mContext).getProduct(item.getId());
             mTextViewProductName.setText(product.getName());
             mTextViewProductPrice.setText(product.getPrice() + "€");
@@ -99,6 +107,37 @@ public class CartListAdapter extends BaseAdapter {
                     .thumbnail(0f)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(mImageViewProductImage);
+
+            //Remove item from cart
+            mButtonPlus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    item.setQuantity(item.getQuantity()+1);
+                    mTextViewProductQuantity.setText(String.valueOf(item.getQuantity()));
+                }
+            });
+
+            mButtonMinus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(item.getQuantity()!=1){
+                        item.setQuantity(item.getQuantity()-1);
+                        mTextViewProductQuantity.setText(String.valueOf(item.getQuantity()));
+                    }
+                    else {
+                        mCartArrayList.remove(item);
+                        //TODO update list after delete
+                    }
+                }
+            });
+
+            mButtonRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mCartArrayList.remove(item);
+                    //TODO update list after delete
+                }
+            });
         }
     }
 }
