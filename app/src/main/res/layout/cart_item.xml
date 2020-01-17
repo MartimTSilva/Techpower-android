@@ -23,14 +23,14 @@
             android:id="@+id/textView_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/textView_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="14sp" />
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,25 +38,30 @@
             android:layout_gravity="bottom"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/button_plus"
+            <ImageButton
+                android:id="@+id/button_minus"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:text="+"
-                android:textSize="15dp" />
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                android:src="@drawable/ic_minus_button_black_24dp" />
 
             <TextView
                 android:id="@+id/textView_quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0" />
+                android:layout_gravity="center"
+                android:text="0"
+                android:textSize="22sp" />
 
-            <Button
-                android:id="@+id/button_minus"
+            <ImageButton
+                android:id="@+id/button_plus"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:text="-"
-                android:textSize="15sp" />
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                android:src="@drawable/ic_plus_button_black_24dp" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -64,7 +69,7 @@
     <ImageButton
         android:id="@+id/imageButton_delete"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_gravity="center"
         android:layout_weight="0"
         android:src="@drawable/ic_remove_shopping_cart_24px" />

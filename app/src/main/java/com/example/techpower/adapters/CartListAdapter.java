@@ -1,15 +1,18 @@
 package com.example.techpower.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -19,7 +22,6 @@ import com.example.techpower.models.Product;
 import com.example.techpower.models.SingletonStore;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class CartListAdapter extends BaseAdapter {
 
@@ -55,6 +57,7 @@ public class CartListAdapter extends BaseAdapter {
         if (convertView == null) {
             try {
                 convertView = mLayoutInflater.inflate(R.layout.cart_item, null);
+
             } catch (Exception ex) {
                 Log.e("Techpower", "getView: ", ex.fillInStackTrace());
             }
@@ -70,18 +73,17 @@ public class CartListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private class ViewHolderList
-    {
+
+    private class ViewHolderList {
         private TextView mTextViewProductName;
         private TextView mTextViewProductPrice;
         private TextView mTextViewProductQuantity;
         private ImageView mImageViewProductImage;
-        private Button mButtonPlus;
-        private Button mButtonMinus;
+        private ImageButton mButtonPlus;
+        private ImageButton mButtonMinus;
         private ImageButton mButtonRemove;
 
-        public ViewHolderList(View view)
-        {
+        public ViewHolderList(View view) {
             mTextViewProductName = view.findViewById(R.id.textView_name);
             mTextViewProductPrice = view.findViewById(R.id.textView_price);
             mTextViewProductQuantity = view.findViewById(R.id.textView_quantity);
@@ -91,8 +93,7 @@ public class CartListAdapter extends BaseAdapter {
             mButtonRemove = view.findViewById(R.id.imageButton_delete);
         }
 
-        public void update(final int position)
-        {
+        public void update(final int position) {
             //Add product info to card
             final CartItem item = SingletonStore.getInstance(mContext).getCartItem(position);
             Product product = SingletonStore.getInstance(mContext).getProduct(item.getId());
@@ -108,34 +109,55 @@ public class CartListAdapter extends BaseAdapter {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(mImageViewProductImage);
 
-            //Remove item from cart
+            //Add 1 to quantity
             mButtonPlus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    item.setQuantity(item.getQuantity()+1);
-                    mTextViewProductQuantity.setText(String.valueOf(item.getQuantity()));
+                    if (item.getQuantity() >= 10) {
+                        Toast.makeText(mContext, "You can't purchase more than 10 of an Item", Toast.LENGTH_SHORT).show();
+                    } else {
+                        item.setQuantity(item.getQuantity() + 1);
+                        mTextViewProductQuantity.setText(String.valueOf(item.getQuantity()));
+                    }
                 }
             });
-
+            //Remove 1 from quantity with confirmation to delete in case quantity = 0
             mButtonMinus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(item.getQuantity()!=1){
-                        item.setQuantity(item.getQuantity()-1);
+                    if (item.getQuantity() != 1) {
+                        item.setQuantity(item.getQuantity() - 1);
                         mTextViewProductQuantity.setText(String.valueOf(item.getQuantity()));
-                    }
-                    else {
-                        mCartArrayList.remove(item);
-                        //TODO update list after delete
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                        builder.setMessage(R.string.cart_quantity_0_alert_dialog)
+                                .setPositiveButton((R.string.cart_item_delete_alert_ok), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        mCartArrayList.remove(item);
+                                        notifyDataSetChanged();
+                                    }
+                                }).setNegativeButton((R.string.cart_item_delete_alert_cancel), null);
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
                     }
                 }
             });
-
+            //Remove cart item with confirmation
             mButtonRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mCartArrayList.remove(item);
-                    //TODO update list after delete
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setMessage(R.string.cart_delete_alert_dialog)
+                            .setPositiveButton((R.string.cart_item_delete_alert_ok), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    mCartArrayList.remove(item);
+                                    notifyDataSetChanged();
+                                }
+                            }).setNegativeButton((R.string.cart_item_delete_alert_cancel), null);
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
             });
         }

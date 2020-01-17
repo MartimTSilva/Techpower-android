@@ -6,6 +6,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -29,6 +30,7 @@ public class CartActivity extends AppCompatActivity {
     private Button btn_checkout;
     private CartListAdapter mCartListAdapter;
     private float total;
+    private Thread thread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,23 +45,40 @@ public class CartActivity extends AppCompatActivity {
         mCartListAdapter = new CartListAdapter(this, cart);
         lv_Products.setAdapter(mCartListAdapter);
 
-        total = SingletonStore.getInstance(this).getCartTotal();
-        tv_total.setText(total + "€");
+        //Thread to update Total
+        thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!thread.isInterrupted()) {
+                        Thread.sleep(200);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                total = SingletonStore.getInstance(getApplicationContext()).getCartTotal();
+                                tv_total.setText(total + "€");
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+        thread.start();
 
+        //Checks if there are any items on cart to be able to checkout
         btn_checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(total!=0) {
+                if (total != 0) {
                     btn_checkout.setEnabled(true);
                     Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
                     startActivity(intent);
-                }
-                else{
+                } else {
                     btn_checkout.setEnabled(false);
                     Toast.makeText(getApplicationContext(), "Cannot checkout without items in Cart", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
     }
 }
