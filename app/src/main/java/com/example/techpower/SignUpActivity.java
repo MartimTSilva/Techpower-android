@@ -75,7 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private User attemptRegistration() {
-        // Reseta os erros no formulário
+        // Resets all form errors
         mUsername.setError(null);
         mEmail.setError(null);
         mPassword.setError(null);
@@ -173,7 +173,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         if (cancel) {
-            // Se existirem erros será focado o primeiro input do form com erros
+            // If there's an form input with errors it will focus on that editText
             focusView.requestFocus();
             return null;
         } else {

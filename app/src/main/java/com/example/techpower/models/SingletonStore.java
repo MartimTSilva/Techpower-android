@@ -185,9 +185,11 @@ public class SingletonStore {
         }
     }
 
-    public void getProductsByCategoryAPI(final Context context, boolean isConnected, int id_category) {
+    public void getProductsByCategoryAPI(final Context context, int id_category) {
+        //Gets all the products of the category
         mProductList = mStoreDB.getAllProductsByCategoryDB(id_category);
 
+        //If there's products in the category it gets displayed else shows a Toast.
         if (mProductListener != null) {
             mProductListener.onRefreshProductList(mProductList);
         }

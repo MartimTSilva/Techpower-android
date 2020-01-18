@@ -41,9 +41,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
         btnAddToCart = findViewById(R.id.button_addToCart);
         tv_productDescription = findViewById(R.id.textView_productDetails);
         
+        //Gets the product ID
         int id = getIntent().getIntExtra("ID", 0);
+
+        //Gets the product with the ID
         mProduct = SingletonStore.getInstance(getApplicationContext()).getProduct(id);
 
+        //Sets the text with all the product information
         tv_productName.setText(mProduct.getName());
         Glide.with(getApplicationContext())
                 .load(mProduct.getImage())
@@ -57,6 +61,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Sends the product ID to the cart
                 SingletonStore.getInstance(getApplicationContext()).addProductCart(mProduct.getId(), 1);
                 Toast.makeText(getApplicationContext(), R.string.add_cart, Toast.LENGTH_SHORT).show();
             }

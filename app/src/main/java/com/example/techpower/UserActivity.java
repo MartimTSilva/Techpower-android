@@ -92,6 +92,7 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
+        //If the delete account btn is pressed it will show a confirmation dialog
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,6 +113,7 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private User updateUser(){
+        //Gets all the text inside the form
         String username = mUsername.getText().toString();
         String email = mEmail.getText().toString();
         String firstName = mFirstName.getText().toString();

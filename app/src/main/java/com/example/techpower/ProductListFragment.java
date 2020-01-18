@@ -107,12 +107,15 @@ public class ProductListFragment extends Fragment implements ProductListener {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                //Create array to store all products with the searched term
                 ArrayList<Product> filteredProducts = new ArrayList<Product>();
+                //Looks for products with the searched term in the title and adds it to the array
                 for (Product product : SingletonStore.getInstance(getContext()).getProductsDB()) {
                     if (product.getName().toLowerCase().contains(newText.toLowerCase())) {
                         filteredProducts.add(product);
                     }
                 }
+                //Shows search result
                 mListViewProducts.setAdapter(new ProductListAdapter(getContext(), filteredProducts));
 
                 return true;

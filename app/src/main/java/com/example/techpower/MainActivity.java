@@ -77,16 +77,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ArrayList<Category> categoryList = SingletonStore.getInstance(getApplicationContext()).getCategoriesDB();
         Menu categoriesSubMenu = menu.addSubMenu(R.string.nav_categories, Menu.NONE, 0, R.string.nav_categories);
         for (Category category: categoryList) {
+            //Adds all the categories and sets a listener
             categoriesSubMenu.add(Menu.NONE, category.getId(), Menu.NONE,category.getName()).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
+                    //Gets the ID of the clicked category
                     int category_id = menuItem.getItemId();
-                    SingletonStore.getInstance(getApplicationContext()).getProductsByCategoryAPI(getApplicationContext(),
-                            SingletonStore.isConnectedInternet(getApplicationContext()), category_id);
+
+                    //Gets products by category
+                    SingletonStore.getInstance(getApplicationContext()).getProductsByCategoryAPI(getApplicationContext(), category_id);
                     return false;
                 }
             });
-
         }
         navigationView.invalidate();
 
