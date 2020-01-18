@@ -82,9 +82,15 @@
     <string name="cart_item_delete_alert_cancel">Cancel</string>
     <string name="cart_quantity_0_alert_dialog">Setting the quantity to 0 will remove this item, do you want to remove it?</string>
 
+    <!-- Checkout  Page -->
+    <string name="label_quantity">Quantity:</string>
+    <string name="sale_completed">Your purchase was completed with success</string>
+    <string name="checkout_no_login">Please, make sure you are logged in!</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="checkout_title">Checkout</string>
+    <string name="Cart_title">Cart</string>
 
 
 </resources>

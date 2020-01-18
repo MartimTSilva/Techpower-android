@@ -1,6 +1,7 @@
 package com.example.techpower.models;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -20,6 +21,7 @@ import com.example.techpower.utils.ProductJsonParser;
 
 import org.json.JSONArray;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class SingletonStore {
@@ -152,14 +154,15 @@ public class SingletonStore {
         return mCart.get(pos);
     }
 
-    public float getCartTotal() {
-        float total = 0;
+    public Float getCartTotal() {
+        DecimalFormat df = new DecimalFormat("0.00");
+        double total = 0;
         for (int i = 0; i < mCart.size(); i++) {
             CartItem item = SingletonStore.getInstance(sContext).getCartItem(i);
             Product product = SingletonStore.getInstance(sContext).getProduct(item.getId());
-            total = (product.getPrice() * item.getQuantity()) + total;
+            total += product.getPrice() * item.getQuantity();
         }
-        return total;
+        return Float.parseFloat(df.format(total));
     }
 
 

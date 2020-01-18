@@ -113,8 +113,8 @@ public class CartListAdapter extends BaseAdapter {
             mButtonPlus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (item.getQuantity() >= 10) {
-                        Toast.makeText(mContext, "You can't purchase more than 10 of an Item", Toast.LENGTH_SHORT).show();
+                    if (item.getQuantity() >= 5) {
+                        Toast.makeText(mContext, "You can't purchase more than 5 of an Item", Toast.LENGTH_SHORT).show();
                     } else {
                         item.setQuantity(item.getQuantity() + 1);
                         mTextViewProductQuantity.setText(String.valueOf(item.getQuantity()));

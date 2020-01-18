@@ -36,6 +36,7 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+        setTitle(R.string.Cart_title);
 
         lv_Products = findViewById(R.id.listCartProducts);
         tv_total = findViewById(R.id.textView_Total);
