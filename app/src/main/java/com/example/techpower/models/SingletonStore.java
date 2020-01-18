@@ -107,6 +107,19 @@ public class SingletonStore {
         mStoreDB.insertProductDB(product);
     }
 
+    public void getProductsByCategory(final Context context, int id_category) {
+        //Gets all the products of the category
+        mProductList = mStoreDB.getAllProductsByCategoryDB(id_category);
+
+        //If there's products in the category it gets displayed else shows a Toast.
+        if (mProductListener != null) {
+            mProductListener.onRefreshProductList(mProductList);
+        }
+        if (mProductList.isEmpty()) {
+            Toast.makeText(context, "This category doesn't have any products", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     /* CRUD Categories */
 
     public void insertCategoriesDB(ArrayList<Category> categoryList) {
@@ -182,19 +195,6 @@ public class SingletonStore {
                 }
             });
             addToRequestQueue(request);
-        }
-    }
-
-    public void getProductsByCategoryAPI(final Context context, int id_category) {
-        //Gets all the products of the category
-        mProductList = mStoreDB.getAllProductsByCategoryDB(id_category);
-
-        //If there's products in the category it gets displayed else shows a Toast.
-        if (mProductListener != null) {
-            mProductListener.onRefreshProductList(mProductList);
-        }
-        if (mProductList.isEmpty()) {
-            Toast.makeText(context, "This category doesn't have any products", Toast.LENGTH_SHORT).show();
         }
     }
 }

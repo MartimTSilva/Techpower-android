@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     int category_id = menuItem.getItemId();
 
                     //Gets products by category
-                    SingletonStore.getInstance(getApplicationContext()).getProductsByCategoryAPI(getApplicationContext(), category_id);
+                    SingletonStore.getInstance(getApplicationContext()).getProductsByCategory(getApplicationContext(), category_id);
                     return false;
                 }
             });
