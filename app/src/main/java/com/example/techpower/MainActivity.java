@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 User.deleteUser(getApplicationContext());
                 finish();
                 startActivity(getIntent());
-                Toast.makeText(getApplicationContext(), "You've been logged out", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.logout_success, Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_settings:
