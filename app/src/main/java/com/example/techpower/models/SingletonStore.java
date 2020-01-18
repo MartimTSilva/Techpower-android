@@ -1,6 +1,7 @@
 package com.example.techpower.models;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -20,6 +21,7 @@ import com.example.techpower.utils.ProductJsonParser;
 
 import org.json.JSONArray;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class SingletonStore {
@@ -136,9 +138,26 @@ public class SingletonStore {
     /* CRUD CART */
 
     public void addProductCart(int productId, int quantity) {
-        CartItem item = new CartItem(productId, quantity);
-        mCart.add(item);
+        int exists = 0;
+        //Checks if cart empty
+        if (mCart.size() == 0) {
+            CartItem new_item = new CartItem(productId, quantity);
+            mCart.add(new_item);
+        } else {
+            //Runs through cart trying to find a match
+            for (CartItem item : mCart) {
+                if (item.getId() == productId) {
+                    exists = 1;
+                }
+            }
+            //If no match is found, add product to cart
+            if (exists != 1){
+                CartItem new_item = new CartItem(productId, quantity);
+                mCart.add(new_item);
+            }
+        }
     }
+
 
     public ArrayList<CartItem> getCart() {
         return mCart;
@@ -147,6 +166,18 @@ public class SingletonStore {
     public CartItem getCartItem(int pos) {
         return mCart.get(pos);
     }
+
+    public Float getCartTotal() {
+        DecimalFormat df = new DecimalFormat("0.00");
+        double total = 0;
+        for (int i = 0; i < mCart.size(); i++) {
+            CartItem item = SingletonStore.getInstance(sContext).getCartItem(i);
+            Product product = SingletonStore.getInstance(sContext).getProduct(item.getId());
+            total += product.getPrice() * item.getQuantity();
+        }
+        return Float.parseFloat(df.format(total));
+    }
+
 
     /* API ACCESS */
 

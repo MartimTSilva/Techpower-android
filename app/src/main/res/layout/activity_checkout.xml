@@ -9,16 +9,15 @@
     tools:context=".CheckoutActivity">
 
     <TextView
-        android:id="@+id/textViewTitle"
+        android:id="@+id/textViewName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/tv_Checkout"
-        android:textColor="@android:color/background_dark"
-        android:textSize="16sp" />
+        android:textSize="22sp"
+        android:textStyle="bold" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="5dp"/>
+        android:layout_height="10dp"/>
 
     <TextView
         android:id="@+id/textViewShippingAdress"
@@ -30,43 +29,36 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="5dp"/>
-
-    <TextView
-        android:id="@+id/textViewName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        android:layout_height="10dp"/>
 
     <TextView
         android:id="@+id/textViewAdress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textViewPostalCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textViewCity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textViewCountry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp" />
+        android:textSize="16sp" />
+
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="30dp"/>
-
+        android:layout_height="20dp" />
 
     <TextView
         android:id="@+id/textView"
@@ -74,7 +66,9 @@
         android:layout_height="wrap_content"
         android:text="@string/tv_items" />
 
-
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
 
         <ListView
             android:id="@+id/listViewCartItems"
@@ -91,22 +85,22 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/label_Total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textView_total"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/textView_Total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/textView_total"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/textViewPreco"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
         <Button
