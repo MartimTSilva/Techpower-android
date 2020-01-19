@@ -47,6 +47,7 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+        setTitle(R.string.nav_userPage);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

@@ -9,20 +9,6 @@
     android:padding="20sp"
     tools:context=".UserActivity">
 
-    <TextView
-        android:id="@+id/textView_signup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/nav_userPage"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
