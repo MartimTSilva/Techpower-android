@@ -40,7 +40,6 @@
     <string name="et_city">City</string>
     <string name="et_country">Country</string>
     <string name="et_nif">NIF</string>
-    <string name="signup">Sign Up</string>
     <string name="signup_success">Account Created Successfully!</string>
     <string name="signup_error">ERROR!\nUsername, E-mail or NIF Already in use.</string>
 

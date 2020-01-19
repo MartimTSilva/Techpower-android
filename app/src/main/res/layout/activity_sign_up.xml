@@ -9,10 +9,6 @@
     android:padding="20sp"
     tools:context=".SignUpActivity">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
