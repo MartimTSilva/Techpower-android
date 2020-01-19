@@ -15,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.techpower.models.CartItem;
 import com.example.techpower.models.Category;
 import com.example.techpower.models.SingletonStore;
 import com.example.techpower.models.User;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FragmentManager mFragmentManager;
     private NavigationView navigationView;
     private Menu menu;
+    private ArrayList<CartItem> cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment fragment = new ProductListFragment();
         setTitle("Techpower");
         mFragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
+
+        cart = SingletonStore.getInstance(this).getCart();
     }
 
     @Override

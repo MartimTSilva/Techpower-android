@@ -1,38 +1,47 @@
 package com.example.techpower.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.techpower.models.Product;
 import com.example.techpower.R;
+import com.example.techpower.models.CartItem;
+import com.example.techpower.models.Product;
+import com.example.techpower.models.SingletonStore;
 
 import java.util.ArrayList;
 
-public class ProductListAdapter extends BaseAdapter {
+public class CheckoutListAdapter extends BaseAdapter {
+
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private ArrayList<Product> mProductArrayList;
+    private ArrayList<CartItem> mCartArrayList;
 
-    public ProductListAdapter(Context context, ArrayList<Product> productArrayList) {
-        mContext = context;
-        mProductArrayList = productArrayList;
+    public CheckoutListAdapter(Context Context, ArrayList<CartItem> CartArrayList) {
+        mContext = Context;
+        mCartArrayList = CartArrayList;
     }
 
     @Override
     public int getCount() {
-        return mProductArrayList.size();
+        return mCartArrayList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mProductArrayList.get(position);
+        return mCartArrayList.get(position);
     }
 
     @Override
@@ -45,9 +54,13 @@ public class ProductListAdapter extends BaseAdapter {
         if (mLayoutInflater == null) {
             mLayoutInflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
         }
-
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.item_product, null);
+            try {
+                convertView = mLayoutInflater.inflate(R.layout.checkout_item, null);
+
+            } catch (Exception ex) {
+                Log.e("Techpower", "getView: ", ex.fillInStackTrace());
+            }
         }
 
         ViewHolderList viewHolder = (ViewHolderList) convertView.getTag();
@@ -55,28 +68,32 @@ public class ProductListAdapter extends BaseAdapter {
             viewHolder = new ViewHolderList(convertView);
             convertView.setTag(viewHolder);
         }
-
         viewHolder.update(position);
 
         return convertView;
     }
 
+
     private class ViewHolderList {
         private TextView mTextViewProductName;
         private TextView mTextViewProductPrice;
+        private TextView mTextViewProductQuantity;
         private ImageView mImageViewProductImage;
 
         public ViewHolderList(View view) {
-            mTextViewProductName = view.findViewById(R.id.product_name);
-            mTextViewProductPrice = view.findViewById(R.id.product_price);
-            mImageViewProductImage = view.findViewById(R.id.product_image);
+            mTextViewProductName = view.findViewById(R.id.textView_name);
+            mTextViewProductPrice = view.findViewById(R.id.textView_price);
+            mTextViewProductQuantity = view.findViewById(R.id.textView_quantity);
+            mImageViewProductImage = view.findViewById(R.id.imageView_Product);
         }
 
         public void update(int position) {
-            // Add product info to card
-            Product product = mProductArrayList.get(position);
+            //Add product info to card
+            CartItem item = SingletonStore.getInstance(mContext).getCartItem(position);
+            Product product = SingletonStore.getInstance(mContext).getProduct(item.getId());
             mTextViewProductName.setText(product.getName());
             mTextViewProductPrice.setText(product.getPrice() + "€");
+            mTextViewProductQuantity.setText(String.valueOf(item.getQuantity()));
 
             // Add image to image view on card
             Glide.with(mContext)
@@ -87,4 +104,6 @@ public class ProductListAdapter extends BaseAdapter {
                     .into(mImageViewProductImage);
         }
     }
+
 }
+
