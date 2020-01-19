@@ -63,21 +63,14 @@
     <string name="error_field_required">Data incorrect</string>
     <string name="error_password_not_match">Passwords don\'t match</string>
     <string name="error_invalid_tooShort">Too short</string>
-    <!--<string name="error_invalid_tooLong">too long</string>
-    <string name="error_invalid_username">This username is invalid</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">Password too short or does not match</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_invalid_phone">Phone number must have 9 digits</string>
-    <string name="error_invalid_nif">NIF  must have 9 digits</string>-->
 
     <!-- Cart  Page -->
     <string name="btn_PlaceOrder">Place Order</string>
     <string name="tv_ShippingAdress">SHIPPING ADDRESS</string>
     <string name="tv_items">ITEMS</string>
-    <string name="tv_Checkout">Checkout</string>
+    <string name="tv_Checkout" translatable="false">Checkout</string>
     <string name="textView_total">Total:</string>
-    <string name="btn_checkout">CHECKOUT</string>
+    <string name="btn_checkout" translatable="false">CHECKOUT</string>
     <string name="cart_delete_alert_dialog">Are you sure you want to remove this item?</string>
     <string name="cart_item_delete_alert_ok">Remove</string>
     <string name="cart_item_delete_alert_cancel">Cancel</string>
@@ -89,8 +82,8 @@
     <string name="checkout_no_login">Please, make sure you are logged in!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="checkout_title">Checkout</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="checkout_title" translatable="false">Checkout</string>
     <string name="Cart_title">Cart</string>
 
 

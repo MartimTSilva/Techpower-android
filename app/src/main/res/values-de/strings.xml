@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Techpower</string>
+    <string name="app_api" translatable="false" />
+    <string name="nav_login">Anmeldung</string>
+    <string name="nav_settings">Einstellungen</string>
+    <string name="nav_userPage">Benutzer Seite</string>
+    <string name="navigation_drawer_open">offen</string>
+    <string name="navigation_drawer_close">schließen</string>
+    <string name="nav_item_search">Suche</string>
+    <string name="nav_categories">Kategorien</string>
+    <string name="nav_account">Konto</string>
+
+    <!-- SettingsActivity -->
+    <string name="settings_et_api">Hier Url einfügen</string>
+    <string name="settings_tv_api">API Url:</string>
+    <string name="settings_btn_connect">Speichern</string>
+    <string name="settings_api_saved">API erfolgreich gespeichert</string>
+
+    <!-- Logout -->
+    <string name="nav_logout">Verlassen Sie</string>
+    <string name="logout_success">Du wurdest ausgeloggt.</string>
+
+    <!-- Login -->
+    <string name="btn_login">Anmeldung</string>
+    <string name="login_success">Willkommen </string>
+    <string name="login_incorrect">Benutzername oder Passwort falsch</string>
+
+    <!-- Sign Up -->
+    <string name="nav_signup">Anmeldung</string>
+    <string name="btn_signup">Anmeldung</string>
+    <string name="et_username">Benutzername</string>
+    <string name="et_password">Passwort</string>
+    <string name="et_confirmPassword">Passwort bestätigen</string>
+    <string name="et_firstName">Vorname</string>
+    <string name="et_lastName">Nachname</string>
+    <string name="et_phone">Telefonnummer</string>
+    <string name="et_address">Anschrift</string>
+    <string name="et_postalCode">Postleitzahl</string>
+    <string name="et_city">Stadt</string>
+    <string name="et_country">Land</string>
+    <string name="tv_signup">Anmelden</string>
+    <string name="signup_success">Konto erfolgreich erstellt!</string>
+    <string name="signup_error">FEHLER!\\nBenutzername, E-Mail oder NIF Bereits in Verwendung.</string>
+
+    <!-- User Page -->
+    <string name="update_success">:Benutzerdaten erfolgreich aktualisiert!</string>
+    <string name="update_error">Es gab einen Fehler bei der Aktualisierung der Benutzerdaten</string>
+    <string name="delete_success">Benutzer erfolgreich gelöscht!</string>
+    <string name="btn_update">AKTUALISIEREN</string>
+    <string name="btn_delete">KONTO LÖSCHEN</string>
+    <string name="user_delete_alert_cancel">Abbrechen</string>
+    <string name="user_delete_alert_ok">Konto löschen</string>
+    <string name="user_delete_alert_dialog">Sind Sie sicher, dass Sie Ihr Konto löschen möchten?</string>
+
+    <!-- Product Details -->
+    <string name="details_btn_addToCart">Zum Warenkorb hinzufügen</string>
+    <string name="add_cart">Produkt in den Warenkorb gelegt</string>
+
+    <!-- Form Error Messages -->
+    <string name="error_field_required">Daten falsch</string>
+    <string name="error_password_not_match">Die Passwörter stimmen nicht überein</string>
+    <string name="error_invalid_tooShort">Zu kurz</string>
+
+    <!-- Cart  Page -->
+    <string name="btn_PlaceOrder">Bestellung aufgeben</string>
+    <string name="tv_ShippingAdress">LIEFERADRESSE</string>
+    <string name="tv_items">ITEMENTE</string>
+    <string name="textView_total">Insgesamt:</string>
+    <string name="cart_delete_alert_dialog">Sind Sie sicher, dass Sie diesen Artikel entfernen möchten?</string>
+    <string name="cart_item_delete_alert_ok">Entfernen</string>
+    <string name="cart_item_delete_alert_cancel">Abbrechen</string>
+    <string name="cart_quantity_0_alert_dialog">Wenn Sie die Menge auf 0 setzen, wird dieser Punkt entfernt, möchten Sie ihn entfernen?</string>
+
+    <!-- Checkout  Page -->
+    <string name="label_quantity">Menge:</string>
+    <string name="sale_completed">:Ihr Kauf wurde erfolgreich abgeschlossen</string>
+    <string name="checkout_no_login">Bitte stellen Sie sicher, dass Sie eingeloggt sind!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="Cart_title">Warenkorb</string>
+</resources>

@@ -50,4 +50,12 @@
     <string name="et_password">Palavra-passe</string>
     <string name="textView_total">Total:</string>
     <string name="logout_success">Sessão terminada</string>
+    <string name="cart_delete_alert_dialog">Tem a certeza que quer remover este item?</string>
+    <string name="cart_item_delete_alert_cancel">Cancelar</string>
+    <string name="cart_item_delete_alert_ok">Remover</string>
+    <string name="cart_quantity_0_alert_dialog">Ao colocar a quantidade a 0 o item será removido, tem a certeza que o quer remover?</string>
+    <string name="checkout_no_login">Por favor, faça o login primeiro!</string>
+    <string name="label_quantity">Quantidade:</string>
+    <string name="sale_completed">A sua compra foi completada com sucesso</string>
+    <string name="Cart_title">Carrinho</string>
 </resources>
