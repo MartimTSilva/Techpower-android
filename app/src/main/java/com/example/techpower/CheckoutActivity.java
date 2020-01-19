@@ -83,6 +83,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
+        lv_Products.setAdapter(mCheckoutListAdapter);
         SharedPreferences preferences = getSharedPreferences(getString(R.string.app_preferences), mContext.MODE_PRIVATE);
         auth_key = preferences.getString("authkey", null);
         //Checks if there is a user logged in and fills the activity information accordingly
@@ -91,7 +92,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private void showUserData(final SharedPreferences preferences) {
         if (auth_key != null) {
-            tv_username.setText(preferences.getString("username", null));
+            tv_username.setText(preferences.getString("firstName", null)+ " "+(preferences.getString("lastName", null)));
             tv_address.setText(preferences.getString("address", null));
             tv_postalCode.setText(preferences.getString("postal_code", null));
             tv_city.setText(preferences.getString("city", null));
