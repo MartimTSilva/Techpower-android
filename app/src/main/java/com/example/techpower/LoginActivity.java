@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setTitle(R.string.nav_login);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
