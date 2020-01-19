@@ -20,6 +20,7 @@ import com.example.techpower.utils.ProductJsonParser;
 
 import org.json.JSONArray;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class SingletonStore {
@@ -153,12 +154,13 @@ public class SingletonStore {
     }
 
     public Float getCartTotal() {
+        DecimalFormat df = new DecimalFormat("0.00");
         float total = 0;
         for (CartItem item : getCart()) {
             Product product = SingletonStore.getInstance(sContext).getProduct(item.getId());
             total += product.getPrice() * item.getQuantity();
         }
-        return total;
+        return Float.parseFloat(df.format(total));
     }
 
     /* API ACCESS */
