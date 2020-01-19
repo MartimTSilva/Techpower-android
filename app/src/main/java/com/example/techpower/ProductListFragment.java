@@ -70,8 +70,10 @@ public class ProductListFragment extends Fragment implements ProductListener {
             @Override
             public void onRefresh() {
                 SingletonStore.getInstance(getContext()).getAllProductsAPI(getContext(), SingletonStore.isConnectedInternet(getContext()));
-
                 swipeRefreshLayout.setRefreshing(false);
+
+                //Sets main activity title to default
+                ((MainActivity) getActivity()).setTitle(R.string.app_name);
             }
         });
 
@@ -129,6 +131,8 @@ public class ProductListFragment extends Fragment implements ProductListener {
     public void onRefreshProductList(ArrayList<Product> productArrayList) {
         mProductListAdapter = new ProductListAdapter(getContext(), productArrayList);
         mListViewProducts.setAdapter(mProductListAdapter);
+        //Sets main activity title to default
+        ((MainActivity) getActivity()).setTitle(R.string.app_name);
     }
 
     @Override

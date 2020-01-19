@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle(R.string.app_name);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Add category submenu
         ArrayList<Category> categoryList = SingletonStore.getInstance(getApplicationContext()).getCategoriesDB();
         Menu categoriesSubMenu = menu.addSubMenu(R.string.nav_categories, Menu.NONE, 0, R.string.nav_categories);
-        for (Category category: categoryList) {
+        for (final Category category: categoryList) {
             //Adds all the categories and sets a listener
             categoriesSubMenu.add(Menu.NONE, category.getId(), Menu.NONE,category.getName()).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
@@ -86,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     //Gets products by category
                     SingletonStore.getInstance(getApplicationContext()).getProductsByCategory(getApplicationContext(), category_id);
+
+                    //Changes title to the category name
+                    setTitle(category.getName());
+
                     return false;
                 }
             });
