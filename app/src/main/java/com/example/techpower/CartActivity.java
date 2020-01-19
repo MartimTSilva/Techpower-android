@@ -50,7 +50,7 @@ public class CartActivity extends AppCompatActivity {
         btn_checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (total != "0") {
+                if (!total.equals("0.00")) {
                     btn_checkout.setEnabled(true);
                     Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
                     startActivity(intent);
