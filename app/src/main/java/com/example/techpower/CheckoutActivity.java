@@ -44,7 +44,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private TextView tv_country;
     private TextView tv_total;
     private Button btn_placeOrder;
-    private float total;
+    private String total;
     private CheckoutListAdapter mCheckoutListAdapter;
     private ListView lv_Products;
     private ArrayList<CartItem> cart;

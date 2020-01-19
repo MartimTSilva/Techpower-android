@@ -29,7 +29,7 @@ public class CartActivity extends AppCompatActivity {
     private TextView tv_total;
     private Button btn_checkout;
     private CartListAdapter mCartListAdapter;
-    private float total;
+    private String total;
     private Thread thread;
 
     @Override
@@ -65,13 +65,12 @@ public class CartActivity extends AppCompatActivity {
                 }
             }
         };
-        thread.start();
 
         //Checks if there are any items on cart to be able to checkout
         btn_checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (total != 0) {
+                if (total != "0") {
                     btn_checkout.setEnabled(true);
                     Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
                     startActivity(intent);
@@ -81,5 +80,17 @@ public class CartActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        thread.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        thread.interrupt();
     }
 }
