@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Techpower</string>
+    <string name="app_api" translatable="false" />
+    <string name="nav_login">Iniciar sesión</string>
+    <string name="nav_settings">Configuraciones</string>
+    <string name="nav_userPage">Página de usuario</string>
+    <string name="navigation_drawer_open">abierto</string>
+    <string name="navigation_drawer_close">cerca</string>
+    <string name="nav_item_search">Buscar</string>
+    <string name="nav_categories">Categorias</string>
+    <string name="nav_account">Cuenta</string>
+    <string name="settings_et_api">Insertar url aquí</string>
+    <string name="settings_tv_api">URL del API:</string>
+    <string name="settings_btn_connect">Salvar</string>
+    <string name="settings_api_saved">API guardada con éxito</string>
+    <string name="nav_logout">Cerrar sesión</string>
+    <string name="logout_success">Has cerrado sesión</string>
+    <string name="btn_login">Iniciar sesión</string>
+    <string name="login_success">Bienvenido</string>
+    <string name="login_incorrect">Usuario o contraseña incorrectos</string>
+    <string name="nav_signup">Regístrate</string>
+    <string name="btn_signup">Regístrate</string>
+    <string name="et_username">Nombre de usuario</string>
+    <string name="et_password">Contraseña</string>
+    <string name="et_confirmPassword">Confirmar contraseña</string>
+    <string name="et_firstName">Nombre de pila</string>
+    <string name="et_lastName">Apellido</string>
+    <string name="et_phone">Número de teléfono</string>
+    <string name="et_address">Habla a</string>
+    <string name="et_postalCode">código postal</string>
+    <string name="et_city">Ciudad</string>
+    <string name="et_country">País</string>
+    <string name="tv_signup">Regístrate</string>
+    <string name="signup_success">¡Cuenta creada con éxito!</string>
+    <string name="signup_error">ERROR! \ NNombre de usuario, correo electrónico o NIF Ya en uso.</string>
+    <string name="update_success">Datos de usuario actualizados con éxito!</string>
+    <string name="update_error">Se produjo un error al actualizar los datos del usuario.</string>
+    <string name="delete_success">¡Usuario eliminado con éxito!</string>
+    <string name="btn_update">ACTUALIZAR</string>
+    <string name="btn_delete">BORRAR CUENTA</string>
+    <string name="user_delete_alert_cancel">Cancelar</string>
+    <string name="user_delete_alert_ok">Borrar cuenta</string>
+    <string name="user_delete_alert_dialog">¿Estás seguro de que deseas eliminar tu cuenta?</string>
+    <string name="details_btn_addToCart">Añadir al carrito</string>
+    <string name="add_cart">Producto agregado al carrito</string>
+    <string name="error_field_required">Datos incorrectos</string>
+    <string name="error_password_not_match">Las contraseñas no coinciden</string>
+    <string name="error_invalid_tooShort">Demasiado corto</string>
+    <string name="btn_PlaceOrder">Realizar pedido</string>
+    <string name="tv_ShippingAdress">DIRECCIÓN DE ENVÍO</string>
+    <string name="tv_items">ARTÍCULOS</string>
+    <string name="textView_total">Total:</string>
+    <string name="cart_delete_alert_dialog">¿Estás seguro de que deseas eliminar este artículo?</string>
+    <string name="cart_item_delete_alert_ok">Eliminar</string>
+    <string name="cart_item_delete_alert_cancel">Cancelar</string>
+    <string name="cart_quantity_0_alert_dialog">Al establecer la cantidad en 0 se eliminará este elemento, ¿desea eliminarlo?</string>
+    <string name="label_quantity">Cantidad:</string>
+    <string name="sale_completed">Su compra se completó con éxito.</string>
+    <string name="checkout_no_login">¡Por favor, asegúrese de estar conectado!</string>
+    <string name="Cart_title">Carro</string>
+
+</resources>
