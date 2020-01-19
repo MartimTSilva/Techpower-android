@@ -19,7 +19,7 @@
 
     <!-- Logout -->
     <string name="nav_logout">Logout</string>
-    <string name="logout_success">You've been logged out</string>
+    <string name="logout_success">You\'ve been logged out</string>
 
     <!-- Login -->
     <string name="btn_login">Login</string>
