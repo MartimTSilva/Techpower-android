@@ -27,6 +27,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:src="@drawable/ic_shopping_cart_24px" />
+        android:src="@drawable/ic_shopping_cart_24px"
+        app:backgroundTint="@color/colorPrimaryDark" />
 
 </FrameLayout>
