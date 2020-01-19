@@ -46,6 +46,26 @@ public class CartActivity extends AppCompatActivity {
         mCartListAdapter = new CartListAdapter(this, cart);
         lv_Products.setAdapter(mCartListAdapter);
 
+        //Checks if there are any items on cart to be able to checkout
+        btn_checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (total != "0") {
+                    btn_checkout.setEnabled(true);
+                    Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
+                    startActivity(intent);
+                } else {
+                    btn_checkout.setEnabled(false);
+                    Toast.makeText(getApplicationContext(), "Cannot checkout without items in Cart", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         //Thread to update Total
         thread = new Thread() {
             @Override
@@ -66,25 +86,6 @@ public class CartActivity extends AppCompatActivity {
             }
         };
 
-        //Checks if there are any items on cart to be able to checkout
-        btn_checkout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (total != "0") {
-                    btn_checkout.setEnabled(true);
-                    Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
-                    startActivity(intent);
-                } else {
-                    btn_checkout.setEnabled(false);
-                    Toast.makeText(getApplicationContext(), "Cannot checkout without items in Cart", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         thread.start();
     }
 
