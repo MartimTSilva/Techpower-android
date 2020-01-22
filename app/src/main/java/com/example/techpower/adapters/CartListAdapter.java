@@ -28,10 +28,12 @@ public class CartListAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private ArrayList<CartItem> mCartArrayList;
+    private  OnCartItemClickListener mOnCartItemClickListener;
 
-    public CartListAdapter(Context Context, ArrayList<CartItem> CartArrayList) {
+    public CartListAdapter(Context Context, ArrayList<CartItem> CartArrayList, OnCartItemClickListener onCartItemClickListener) {
         mContext = Context;
         mCartArrayList = CartArrayList;
+        mOnCartItemClickListener = onCartItemClickListener;
     }
 
     @Override
@@ -65,7 +67,7 @@ public class CartListAdapter extends BaseAdapter {
 
         ViewHolderList viewHolder = (ViewHolderList) convertView.getTag();
         if (viewHolder == null) {
-            viewHolder = new ViewHolderList(convertView);
+            viewHolder = new ViewHolderList(convertView, mOnCartItemClickListener);
             convertView.setTag(viewHolder);
         }
         viewHolder.update(position);
@@ -74,7 +76,7 @@ public class CartListAdapter extends BaseAdapter {
     }
 
 
-    private class ViewHolderList {
+    private class ViewHolderList  implements  View.OnClickListener{
         private TextView mTextViewProductName;
         private TextView mTextViewProductPrice;
         private TextView mTextViewProductQuantity;
@@ -82,8 +84,12 @@ public class CartListAdapter extends BaseAdapter {
         private ImageButton mButtonPlus;
         private ImageButton mButtonMinus;
         private ImageButton mButtonRemove;
+        private OnCartItemClickListener onCartItemClickListener;
+        private int mPostition;
+        private int product_id;
 
-        public ViewHolderList(View view) {
+
+        public ViewHolderList(View view, OnCartItemClickListener onCartItemClickListener) {
             mTextViewProductName = view.findViewById(R.id.textView_name);
             mTextViewProductPrice = view.findViewById(R.id.textView_price);
             mTextViewProductQuantity = view.findViewById(R.id.textView_quantity);
@@ -91,6 +97,9 @@ public class CartListAdapter extends BaseAdapter {
             mButtonPlus = view.findViewById(R.id.button_plus);
             mButtonMinus = view.findViewById(R.id.button_minus);
             mButtonRemove = view.findViewById(R.id.imageButton_delete);
+            this.onCartItemClickListener = onCartItemClickListener;
+
+            view.setOnClickListener(this);
         }
 
         public void update(final int position) {
@@ -100,7 +109,8 @@ public class CartListAdapter extends BaseAdapter {
             mTextViewProductName.setText(product.getName());
             mTextViewProductPrice.setText(product.getPrice() + "€");
             mTextViewProductQuantity.setText(String.valueOf(item.getQuantity()));
-
+            mPostition = position;
+            product_id = item.getId();
             // Add image to image view on card
             Glide.with(mContext)
                     .load(product.getImage())
@@ -161,6 +171,15 @@ public class CartListAdapter extends BaseAdapter {
                 }
             });
         }
+
+        @Override
+        public void onClick(View v) {
+            onCartItemClickListener.onCartItemClick(mPostition, product_id);
+        }
+    }
+
+    public interface OnCartItemClickListener {
+        void onCartItemClick(int position, int id);
     }
 }
 

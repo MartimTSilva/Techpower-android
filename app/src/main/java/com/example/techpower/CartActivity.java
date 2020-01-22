@@ -22,7 +22,7 @@ import com.example.techpower.models.SingletonStore;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class CartActivity extends AppCompatActivity {
+public class CartActivity extends AppCompatActivity implements CartListAdapter.OnCartItemClickListener  {
 
     private ArrayList<CartItem> cart;
     private ListView lv_Products;
@@ -43,7 +43,7 @@ public class CartActivity extends AppCompatActivity {
         btn_checkout = findViewById(R.id.button_Checkout);
         cart = SingletonStore.getInstance(this).getCart();
 
-        mCartListAdapter = new CartListAdapter(this, cart);
+        mCartListAdapter = new CartListAdapter(this, cart, this);
         lv_Products.setAdapter(mCartListAdapter);
 
         //Checks if there are any items on cart to be able to checkout
@@ -60,13 +60,23 @@ public class CartActivity extends AppCompatActivity {
                 }
             }
         });
+
+        lv_Products.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Product product = (Product) parent.getItemAtPosition(position);
+                Intent intent = new Intent(getApplicationContext(), ProductDetailsActivity.class);
+                intent.putExtra("ID", product.getId());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        //Thread to update Total
+//        Thread to update Total
         thread = new Thread() {
             @Override
             public void run() {
@@ -93,5 +103,13 @@ public class CartActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         thread.interrupt();
+    }
+
+    @Override
+    public void onCartItemClick(int position,int id) {
+            Product product = SingletonStore.getInstance(this).getProduct(id);
+            Intent intent = new Intent(getApplicationContext(), ProductDetailsActivity.class);
+            intent.putExtra("ID", product.getId());
+            startActivity(intent);
     }
 }
