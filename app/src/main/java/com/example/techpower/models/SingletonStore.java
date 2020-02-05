@@ -96,7 +96,7 @@ public class SingletonStore {
     }
 
     public Product getProduct(int idProduct) {
-        for (Product product : mProductList) {
+        for (Product product : getProductsDB()) {
             if (product.getId() == idProduct) {
                 return product;
             }
